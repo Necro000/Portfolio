@@ -7,6 +7,15 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 // MathUtils has small math helpers; we use damp() for smooth easing.
 import { MathUtils } from 'three'
+// The HTML layer that goes on top of the 3D canvas (Phase 2, Task 1).
+import Overlay from './components/ui/Overlay'
+// Lenis smooth scrolling (Phase 2, Task 2).
+import useSmoothScroll from './hooks/useSmoothScroll'
+// Moves the camera as the page scrolls (Phase 2, Task 3).
+import CameraRig from './components/three/CameraRig'
+// The six placeholder scenes and their data (Phase 2, Task 4).
+import PlaceholderScene from './components/three/PlaceholderScene'
+import { SCENES } from './utils/constants'
 
 // A small component for just the cube. It must live INSIDE <Canvas>,
 // because useFrame only works within the 3D world.
@@ -63,17 +72,24 @@ function MouseParallax() {
     camera.position.x = MathUtils.damp(camera.position.x, pointer.x * strength, 3, delta)
     camera.position.y = MathUtils.damp(camera.position.y, pointer.y * strength, 3, delta)
 
-    // Moving the camera also changes where it points, so we aim it at the center again.
-    camera.lookAt(0, 0, 0)
+    // Moving the camera also changes where it points, so we re-aim it.
+    // The camera now travels along z, so we aim 5 units AHEAD of it (not at the origin,
+    // or it would turn back to stare at the start once it has moved deep into the scene).
+    camera.lookAt(0, 0, camera.position.z - 5)
   })
 
   return null
 }
 
 function App() {
+  // Turn on smooth scrolling for the whole page.
+  useSmoothScroll()
+
   return (
-    // The Canvas fills its parent, so we give the parent the whole screen.
-    // position: fixed + inset: 0 also ignores the leftover Vite starter styles on #root.
+    // Fragment <> ... </> lets us return two siblings: the fixed 3D layer and the spacer.
+    <>
+    {/* The Canvas fills its parent, so we give the parent the whole screen.
+        position: fixed + inset: 0 also ignores the leftover Vite starter styles on #root. */}
     <div style={{ position: 'fixed', inset: 0, background: '#07060d' }}>
       {/* The default camera sits at z = 5 and looks at the center (0, 0, 0). */}
       <Canvas>
@@ -81,6 +97,8 @@ function App() {
         <ambientLight intensity={0.5} />
         {/* Light from a point in space (x, y, z), like a lamp. It gives the objects shading. */}
         <pointLight position={[5, 5, 5]} intensity={60} />
+        {/* Scroll controls how close the camera is (z). Listed before MouseParallax so z is set first. */}
+        <CameraRig />
         {/* Runs every frame and eases the camera toward the cursor. */}
         <MouseParallax />
         <SpinningCube />
@@ -88,8 +106,20 @@ function App() {
         <Suspense fallback={null}>
           <Lantern />
         </Suspense>
+        {/* One placeholder per scene. .map() turns the SCENES list into six components;
+            key helps React tell them apart. */}
+        {SCENES.map((scene, index) => (
+          <PlaceholderScene key={scene.id} scene={scene} index={index} />
+        ))}
       </Canvas>
+      {/* Placed AFTER the Canvas in the page, so it is drawn on top of it. */}
+      <Overlay />
     </div>
+
+    {/* TEMPORARY: an empty tall block, one screen (100vh) per scene, so the page has something to scroll.
+        We'll replace it with real HTML sections later. */}
+    <div style={{ height: `${SCENES.length * 100}vh` }} />
+    </>
   )
 }
 
