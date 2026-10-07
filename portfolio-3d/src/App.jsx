@@ -1,14 +1,22 @@
 // Phase 1, Task 4: mouse parallax (cube from Task 1 and lantern from Task 3 stay).
 
-import { useRef, Suspense } from 'react'
+import { useRef, useState, Suspense } from 'react'
 // Canvas = the 3D world. useFrame = code that runs on every rendered frame.
 import { Canvas, useFrame } from '@react-three/fiber'
 // useGLTF = drei's helper that loads .glb / .gltf files.
 import { useGLTF } from '@react-three/drei'
 // MathUtils has small math helpers; we use damp() for smooth easing.
 import { MathUtils } from 'three'
-// The HTML layer that goes on top of the 3D canvas (Phase 2, Task 1).
-import Overlay from './components/ui/Overlay'
+// Import anime-inspired UI design styles (Solo Leveling & One Piece).
+import './styles/ui.css'
+// The 6 full-page HTML sections for the 6 scenes (Phase 3, Task 3).
+import Sections from './components/ui/Sections'
+// Navigation bar with rotating compass (Phase 3, Task 2).
+import Navbar from './components/ui/Navbar'
+// Solo Leveling style system loading screen (Phase 3, Task 2).
+import Loader from './components/ui/Loader'
+// Project detail modal dialog (Phase 4, Task 2).
+import ProjectModal from './components/ui/ProjectModal'
 // Lenis smooth scrolling (Phase 2, Task 2).
 import useSmoothScroll from './hooks/useSmoothScroll'
 // Moves the camera as the page scrolls (Phase 2, Task 3).
@@ -82,6 +90,9 @@ function MouseParallax() {
 }
 
 function App() {
+  // Currently opened project for the detail modal
+  const [selectedProject, setSelectedProject] = useState(null)
+
   // Turn on smooth scrolling for the whole page.
   useSmoothScroll()
 
@@ -109,16 +120,30 @@ function App() {
         {/* One placeholder per scene. .map() turns the SCENES list into six components;
             key helps React tell them apart. */}
         {SCENES.map((scene, index) => (
-          <PlaceholderScene key={scene.id} scene={scene} index={index} />
+          <PlaceholderScene
+            key={scene.id}
+            scene={scene}
+            index={index}
+            onSelectProject={setSelectedProject}
+          />
         ))}
       </Canvas>
-      {/* Placed AFTER the Canvas in the page, so it is drawn on top of it. */}
-      <Overlay />
+      {/* Navbar with rotating compass needle */}
+      <Navbar />
+      {/* System loading screen: monitors 3D asset download progress */}
+      <Loader />
     </div>
 
-    {/* TEMPORARY: an empty tall block, one screen (100vh) per scene, so the page has something to scroll.
-        We'll replace it with real HTML sections later. */}
-    <div style={{ height: `${SCENES.length * 100}vh` }} />
+    {/* The 6 full-screen HTML content sections that scroll over the fixed 3D canvas */}
+    <Sections onSelectProject={setSelectedProject} />
+
+    {/* Project Detail Modal Dialog (opens when a 3D poster or project card is clicked) */}
+    {selectedProject && (
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
+    )}
     </>
   )
 }

@@ -1,48 +1,70 @@
-// Phase 2, Task 1: an HTML layer that sits on top of the 3D Canvas.
+// Phase 3: HTML layer on top of the 3D Canvas, utilizing SystemWindow.
+
+import SystemWindow from './SystemWindow'
 
 function Overlay() {
   return (
-    // position: fixed pins this layer to the screen; inset: 0 stretches it over everything.
-    // pointer-events: none lets the mouse "fall through" to the Canvas below,
-    // otherwise this layer would block the mouse and the parallax would stop working.
+    // Fixed overlay with pointer-events: none so mouse clicks fall through to Canvas
     <div
       style={{
         position: 'fixed',
         inset: 0,
         pointerEvents: 'none',
-        // Flexbox centers the text block on the screen.
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '16px',
-        // Colors come from DESIGN.md (--text and --system-blue).
-        color: '#e9e7f5',
-        textAlign: 'center',
+        gap: '20px',
+        padding: '20px',
+        zIndex: 10,
       }}
     >
-      {/* Real HTML text: sharp, selectable, and readable by screen readers. */}
-      <h1 style={{ margin: 0, fontSize: '40px', letterSpacing: '0.08em' }}>
-        ARISE
-      </h1>
-      <p style={{ margin: 0, color: '#9b97b3' }}>
-        HTML layer on top of the 3D canvas
-      </p>
+      {/* SystemWindow HUD panel showcasing Solo Leveling aesthetic */}
+      <SystemWindow title="HUNTER STATUS: AWAKENED">
+        <div style={{ textAlign: 'center' }}>
+          <h1
+            style={{
+              margin: '0 0 8px 0',
+              fontSize: '32px',
+              letterSpacing: '0.1em',
+              color: '#e9e7f5',
+            }}
+          >
+            ARISE
+          </h1>
+          <p
+            style={{
+              margin: '0 0 20px 0',
+              color: '#9b97b3',
+              fontSize: '14px',
+            }}
+          >
+            Creative Developer & 3D Web Explorer
+          </p>
 
-      {/* Buttons must opt back in to the mouse, since their parent turned it off. */}
-      <button
-        type="button"
-        style={{
-          pointerEvents: 'auto',
-          padding: '8px 24px',
-          background: 'transparent',
-          color: '#3ab7ff',
-          border: '1px solid #3ab7ff',
-          cursor: 'pointer',
-        }}
-      >
-        View Projects
-      </button>
+          <button
+            type="button"
+            onClick={() => {
+              // Scroll to Projects section (index 3)
+              window.scrollTo({ top: 3 * window.innerHeight, behavior: 'smooth' })
+            }}
+            style={{
+              pointerEvents: 'auto',
+              padding: '10px 24px',
+              background: 'rgba(58, 183, 255, 0.1)',
+              color: '#3ab7ff',
+              border: '1px solid #3ab7ff',
+              borderRadius: '2px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              letterSpacing: '0.1em',
+              transition: 'all 0.2s',
+            }}
+          >
+            VIEW PROJECTS
+          </button>
+        </div>
+      </SystemWindow>
     </div>
   )
 }
