@@ -3,9 +3,12 @@
 
 import { useState, useEffect } from 'react'
 import { SCENES } from '../../utils/constants'
+import useReducedMotion from '../../hooks/useReducedMotion'
 
 function Navbar() {
   const [activeSection, setActiveSection] = useState(0)
+  const [isImpactActive, setIsImpactActive] = useState(false)
+  const prefersReducedMotion = useReducedMotion()
 
   // Listen to window scroll to determine which scene is currently in view
   useEffect(() => {
@@ -24,8 +27,13 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Smoothly scroll to a selected section
+  // Smoothly scroll to a selected section with anime impact frame
   function scrollToSection(index) {
+    if (index !== activeSection && !prefersReducedMotion) {
+      setIsImpactActive(true)
+      setTimeout(() => setIsImpactActive(false), 220)
+    }
+
     const targetY = index * window.innerHeight
     window.scrollTo({
       top: targetY,
@@ -37,7 +45,9 @@ function Navbar() {
   const needleAngle = activeSection * (360 / SCENES.length)
 
   return (
-    <nav className="navbar">
+    <>
+    {isImpactActive && <div className="manga-impact-overlay" />}
+    <nav className="navbar" aria-label="Main Portfolio Navigation">
       {/* Brand logo + One Piece inspired compass */}
       <div className="navbar-brand">
         {/* Animated Compass SVG */}
@@ -65,6 +75,7 @@ function Navbar() {
               type="button"
               className={activeSection === index ? 'active' : ''}
               onClick={() => scrollToSection(index)}
+              aria-label={`Jump to ${scene.name} section`}
             >
               {scene.name}
             </button>
@@ -72,6 +83,7 @@ function Navbar() {
         ))}
       </ul>
     </nav>
+    </>
   )
 }
 

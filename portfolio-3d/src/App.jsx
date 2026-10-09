@@ -3,8 +3,7 @@
 import { useRef, useState, Suspense } from 'react'
 // Canvas = the 3D world. useFrame = code that runs on every rendered frame.
 import { Canvas, useFrame } from '@react-three/fiber'
-// useGLTF = drei's helper that loads .glb / .gltf files.
-import { useGLTF } from '@react-three/drei'
+
 // MathUtils has small math helpers; we use damp() for smooth easing.
 import { MathUtils } from 'three'
 // Import anime-inspired UI design styles (Solo Leveling & One Piece).
@@ -17,6 +16,14 @@ import Navbar from './components/ui/Navbar'
 import Loader from './components/ui/Loader'
 // Project detail modal dialog (Phase 4, Task 2).
 import ProjectModal from './components/ui/ProjectModal'
+// Manga speed lines impact overlay on fast scroll (Phase 5, Task 6).
+import SpeedLines from './components/ui/SpeedLines'
+// Responsive device detection hook (Phase 6, Task 1).
+import useIsMobile from './hooks/useIsMobile'
+// Reduced-motion accessibility detection hook (Phase 6, Task 2).
+import useReducedMotion from './hooks/useReducedMotion'
+// Cyberpunk HUD crosshair cursor
+import CustomCursor from './components/ui/CustomCursor'
 // Lenis smooth scrolling (Phase 2, Task 2).
 import useSmoothScroll from './hooks/useSmoothScroll'
 // Moves the camera as the page scrolls (Phase 2, Task 3).
@@ -24,52 +31,28 @@ import CameraRig from './components/three/CameraRig'
 // The six placeholder scenes and their data (Phase 2, Task 4).
 import PlaceholderScene from './components/three/PlaceholderScene'
 import { SCENES } from './utils/constants'
+// Cinematic Post-Processing: Bloom aura & Vignette (Phase 5, Task 2).
+import Effects from './components/three/Effects'
+// Solo Leveling style rising shadow embers (Phase 5, Task 3).
+import ShadowParticles from './components/three/ShadowParticles'
+// One Piece style animated ocean shader (Phase 5, Task 4).
+import Ocean from './components/three/Ocean'
 
-// A small component for just the cube. It must live INSIDE <Canvas>,
-// because useFrame only works within the 3D world.
-function SpinningCube() {
-  // A ref is a handle to the real 3D object, so we can change it directly.
-  // We use a ref (not state) because state would re-render React 60 times a second.
-  const cubeRef = useRef()
 
-  // Runs every frame. "delta" = seconds since the last frame.
-  useFrame((state, delta) => {
-    // Multiplying by delta makes the speed the same on 60Hz and 144Hz screens.
-    // Rotation is in radians; 1 means about 57 degrees per second.
-    cubeRef.current.rotation.x += delta
-    cubeRef.current.rotation.y += delta
-  })
-
-  return (
-    // position = [x, y, z]. x = -2 moves the cube left to make room for the model.
-    <mesh ref={cubeRef} position={[-2, 0, 0]}>
-      {/* geometry = the shape. [1, 1, 1] means width, height, depth in 3D units. */}
-      <boxGeometry args={[1, 1, 1]} />
-      {/* material = the surface. "Standard" reacts to light; violet is --shadow-violet from DESIGN.md. */}
-      <meshStandardMaterial color="#6d28d9" />
-    </mesh>
-  )
-}
-
-// Loads the lantern model from public/models/ and puts it in the scene.
-function Lantern() {
-  // "/models/lantern.glb" = a file in public/. The hook waits for the download,
-  // so a <Suspense> parent is required (see App below).
-  // "scene" is the whole 3D object inside the file (its meshes, materials, textures).
-  const { scene } = useGLTF('/models/lantern.glb')
-
-  // <primitive> inserts an existing Three.js object into our scene.
-  // scale: this model is huge, so 0.1 shrinks it to 10% of its size.
-  // position: its origin is at its base, so y = -1 sets it down a bit; x = 2 puts it on the right.
-  return <primitive object={scene} scale={0.1} position={[2, -1, 0]} />
-}
 
 // Moves the camera slightly toward the mouse, so the scene feels deep.
-// Renders nothing (returns null); it only runs code every frame.
-function MouseParallax() {
+// Respects reducedMotion: keeps camera steady at center to prevent motion sickness.
+function MouseParallax({ reducedMotion = false }) {
   useFrame((state, delta) => {
-    // state.camera = the camera we're moving. state.pointer = mouse position, -1 to 1 on each axis.
     const { camera, pointer } = state
+
+    // If reduced motion is requested, smoothly keep camera centered at (0, 0)
+    if (reducedMotion) {
+      camera.position.x = MathUtils.damp(camera.position.x, 0, 3, delta)
+      camera.position.y = MathUtils.damp(camera.position.y, 0, 3, delta)
+      camera.lookAt(0, 0, camera.position.z - 5)
+      return
+    }
 
     // How far the camera may shift. Bigger = stronger effect.
     const strength = 1
@@ -90,6 +73,12 @@ function MouseParallax() {
 }
 
 function App() {
+  // Detect mobile screen for adaptive 3D performance and scaling
+  const isMobile = useIsMobile()
+
+  // Detect user preference for reduced motion (accessibility)
+  const prefersReducedMotion = useReducedMotion()
+
   // Currently opened project for the detail modal
   const [selectedProject, setSelectedProject] = useState(null)
 
@@ -102,31 +91,35 @@ function App() {
     {/* The Canvas fills its parent, so we give the parent the whole screen.
         position: fixed + inset: 0 also ignores the leftover Vite starter styles on #root. */}
     <div style={{ position: 'fixed', inset: 0, background: '#07060d' }}>
-      {/* The default camera sits at z = 5 and looks at the center (0, 0, 0). */}
-      <Canvas>
+      {/* dpr={[1, 1.5]} caps pixel ratio to prevent retina mobile phones from overheating! */}
+      <Canvas dpr={[1, 1.5]}>
         {/* Soft light from everywhere, so no side is pitch black. */}
         <ambientLight intensity={0.5} />
         {/* Light from a point in space (x, y, z), like a lamp. It gives the objects shading. */}
         <pointLight position={[5, 5, 5]} intensity={60} />
         {/* Scroll controls how close the camera is (z). Listed before MouseParallax so z is set first. */}
         <CameraRig />
-        {/* Runs every frame and eases the camera toward the cursor. */}
-        <MouseParallax />
-        <SpinningCube />
-        {/* Suspense = "wait here until the model has loaded". fallback={null} shows nothing meanwhile. */}
+        {/* Runs every frame and eases the camera toward the cursor (disabled when reduced motion is preferred). */}
+        <MouseParallax reducedMotion={prefersReducedMotion} />
+
+        {/* Suspense boundary for 3D textures & Wanted Poster screenshots */}
         <Suspense fallback={null}>
-          <Lantern />
+          {SCENES.map((scene, index) => (
+            <PlaceholderScene
+              key={scene.id}
+              scene={scene}
+              index={index}
+              onSelectProject={setSelectedProject}
+              isMobile={isMobile}
+            />
+          ))}
         </Suspense>
-        {/* One placeholder per scene. .map() turns the SCENES list into six components;
-            key helps React tell them apart. */}
-        {SCENES.map((scene, index) => (
-          <PlaceholderScene
-            key={scene.id}
-            scene={scene}
-            index={index}
-            onSelectProject={setSelectedProject}
-          />
-        ))}
+        {/* Adaptive particles: 150 on mobile for 60fps battery efficiency, 500 on desktop */}
+        <ShadowParticles count={isMobile ? 150 : 500} />
+        {/* Animated One Piece Grand Line ocean shader */}
+        <Ocean />
+        {/* Post-Processing Effects: Bloom glow & Vignette framing */}
+        <Effects />
       </Canvas>
       {/* Navbar with rotating compass needle */}
       <Navbar />
@@ -144,6 +137,12 @@ function App() {
         onClose={() => setSelectedProject(null)}
       />
     )}
+
+    {/* Manga Speed Lines impact frame on rapid camera movement */}
+    <SpeedLines />
+
+    {/* Cyberpunk HUD Crosshair Cursor with Mana Sparks */}
+    <CustomCursor />
     </>
   )
 }

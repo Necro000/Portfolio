@@ -1,58 +1,52 @@
-// Phase 4, Task 1: 3D Wanted Poster with raycasted hover tilt and pointer events.
-// Inspired by One Piece wanted posters floating in 3D space.
+// High-End 3D Holographic Project Monolith.
+// Replaces clumsy parchment paper with a precision obsidian glass slab,
+// metallic chamfers, glowing neon laser rims, and crisp typography.
 
-import { useRef, useState } from 'react'
+import { useRef, useState, Suspense } from 'react'
 import { useFrame } from '@react-three/fiber'
-// Drei's <Text> renders crisp typography directly inside the 3D WebGL scene!
-import { Text } from '@react-three/drei'
+import { Text, Image } from '@react-three/drei'
 import { MathUtils } from 'three'
 
 function WantedPoster({ project, position = [0, 0, 0], onClick }) {
   const meshRef = useRef()
   const [hovered, setHovered] = useState(false)
-  // Store target tilt angles (in radians) calculated from mouse position over the poster
   const targetRotation = useRef({ x: 0, y: 0 })
 
-  // Runs on every frame refresh (60/144 fps)
   useFrame((state, delta) => {
     if (!meshRef.current) return
 
-    // 1. Smoothly interpolate (damp) the poster's 3D tilt towards target rotation
-    // When hovered: tilts towards cursor. When not hovered: smoothly returns to 0
+    // Smoothly ease the 3D card tilt towards the cursor
     const targetX = hovered ? targetRotation.current.x : 0
     const targetY = hovered ? targetRotation.current.y : 0
 
     meshRef.current.rotation.x = MathUtils.damp(
       meshRef.current.rotation.x,
       targetX,
-      8,
+      9,
       delta
     )
     meshRef.current.rotation.y = MathUtils.damp(
       meshRef.current.rotation.y,
       targetY,
-      8,
+      9,
       delta
     )
 
-    // 2. Smoothly float the poster slightly forward on Z-axis when hovered
-    const targetZ = hovered ? position[2] + 0.4 : position[2]
+    // Lift forward on the Z-axis on hover with smooth damping
+    const targetZ = hovered ? position[2] + 0.45 : position[2]
     meshRef.current.position.z = MathUtils.damp(
       meshRef.current.position.z,
       targetZ,
-      6,
+      7,
       delta
     )
   })
 
-  // Calculate mouse tilt based on where the cursor hits the poster plane
   function handlePointerMove(e) {
-    e.stopPropagation() // Prevent events from bleeding into objects behind
+    e.stopPropagation()
     if (e.uv) {
-      // e.uv gives normalized coordinates across the face (0 to 1). Center is at 0.5.
-      // Offset from center (-0.5 to +0.5) determines tilt direction
-      targetRotation.current.x = (e.uv.y - 0.5) * 0.4
-      targetRotation.current.y = -(e.uv.x - 0.5) * 0.4
+      targetRotation.current.x = (e.uv.y - 0.5) * 0.35
+      targetRotation.current.y = -(e.uv.x - 0.5) * 0.35
     }
   }
 
@@ -60,7 +54,6 @@ function WantedPoster({ project, position = [0, 0, 0], onClick }) {
     <group
       ref={meshRef}
       position={position}
-      // R3F 3D Pointer Events (Raycasting)
       onPointerOver={(e) => {
         e.stopPropagation()
         setHovered(true)
@@ -77,114 +70,142 @@ function WantedPoster({ project, position = [0, 0, 0], onClick }) {
       }}
     >
       {/* ========================================================
-          1. PARCHMENT POSTER BASE (Aged Paper)
+          1. LASER RIM FRAME (Glows with Post-Processing Bloom)
           ======================================================== */}
-      {/* 2.2 units wide, 3.2 units tall */}
+      <mesh position={[0, 0, -0.01]}>
+        <planeGeometry args={[2.26, 3.26]} />
+        <meshStandardMaterial
+          color={hovered ? '#00f0ff' : '#4f46e5'}
+          emissive={hovered ? '#00f0ff' : '#38bdf8'}
+          emissiveIntensity={hovered ? 1.8 : 0.4}
+          roughness={0.1}
+          metalness={0.9}
+        />
+      </mesh>
+
+      {/* ========================================================
+          2. OBSIDIAN GLASS SLAB BASE
+          ======================================================== */}
       <mesh>
         <planeGeometry args={[2.2, 3.2]} />
         <meshStandardMaterial
-          color={hovered ? '#f4e9cf' : '#e8d9b5'} // Glows subtly brighter on hover
-          roughness={0.7}
-          metalness={0.05}
+          color={hovered ? '#100e1c' : '#08070e'}
+          roughness={0.25}
+          metalness={0.85}
         />
       </mesh>
 
       {/* ========================================================
-          2. POSTER HEADLINE: "WANTED"
+          3. HEADER BADGE: STATUS PILL
           ======================================================== */}
       <Text
-        position={[0, 1.25, 0.02]} // Placed 0.02 in front of the parchment plane to avoid z-fighting
-        fontSize={0.24}
-        color="#1b1410"
+        position={[0, 1.32, 0.02]}
+        fontSize={0.085}
+        color={hovered ? '#00f0ff' : '#94a3b8'}
         anchorX="center"
         anchorY="middle"
-        letterSpacing={0.12}
+        letterSpacing={0.14}
         fontWeight="bold"
       >
-        WANTED
+        {hovered ? '● LIVE PRODUCTION APP' : '[ SYSTEM DISPATCH ]'}
       </Text>
 
       {/* ========================================================
-          3. PICTURE FRAME (Placeholder for screenshot)
+          4. SCREENSHOT DISPLAY BEZEL & IMAGE
           ======================================================== */}
-      <mesh position={[0, 0.35, 0.02]}>
-        <planeGeometry args={[1.8, 1.3]} />
-        <meshStandardMaterial
-          color="#1b1410"
-          roughness={0.9}
-        />
+      {/* Dark metallic background frame */}
+      <mesh position={[0, 0.42, 0.015]}>
+        <planeGeometry args={[1.88, 1.34]} />
+        <meshStandardMaterial color="#030206" roughness={0.4} metalness={0.8} />
       </mesh>
 
-      {/* Tech stack badge preview inside the picture frame */}
-      <Text
-        position={[0, 0.35, 0.03]}
-        fontSize={0.09}
-        color="#3ab7ff"
-        anchorX="center"
-        anchorY="middle"
-        maxWidth={1.6}
-        textAlign="center"
+      {/* Asynchronous Texture Loader with Safe Fallback */}
+      <Suspense
+        fallback={
+          <mesh position={[0, 0.42, 0.02]}>
+            <planeGeometry args={[1.84, 1.3]} />
+            <meshStandardMaterial color="#0e0d16" roughness={0.8} />
+          </mesh>
+        }
       >
-        {project.tech.join(' • ')}
-      </Text>
+        {project.thumbnail && (
+          <Image
+            url={project.thumbnail}
+            position={[0, 0.42, 0.025]}
+            scale={[1.84, 1.3]}
+            transparent
+            opacity={0.96}
+          />
+        )}
+      </Suspense>
 
       {/* ========================================================
-          4. "DEAD OR ALIVE" BANNER
+          5. PROJECT TITLE & DETAILS
           ======================================================== */}
       <Text
-        position={[0, -0.45, 0.02]}
-        fontSize={0.1}
-        color="#5c4d3c"
-        anchorX="center"
-        anchorY="middle"
-        letterSpacing={0.05}
-      >
-        DEAD OR ALIVE
-      </Text>
-
-      {/* ========================================================
-          5. PROJECT TITLE
-          ======================================================== */}
-      <Text
-        position={[0, -0.7, 0.02]}
-        fontSize={0.14}
-        color="#1b1410"
+        position={[0, -0.44, 0.02]}
+        fontSize={0.125}
+        color="#ffffff"
         anchorX="center"
         anchorY="middle"
         fontWeight="bold"
         maxWidth={1.9}
         textAlign="center"
+        letterSpacing={0.04}
       >
         {project.title.toUpperCase()}
       </Text>
 
-      {/* ========================================================
-          6. BOUNTY AMOUNT
-          ======================================================== */}
+      {/* Tech Stack Pills */}
       <Text
-        position={[0, -1.05, 0.02]}
-        fontSize={0.17}
-        color="#e5383b" // Signature red bounty stamp
+        position={[0, -0.72, 0.02]}
+        fontSize={0.08}
+        color="#38bdf8"
+        anchorX="center"
+        anchorY="middle"
+        maxWidth={1.8}
+        textAlign="center"
+        letterSpacing={0.06}
+      >
+        {project.tech.slice(0, 4).join('  •  ')}
+      </Text>
+
+      {/* Role / Architecture Tag */}
+      <Text
+        position={[0, -0.96, 0.02]}
+        fontSize={0.075}
+        color="#64748b"
+        anchorX="center"
+        anchorY="middle"
+        letterSpacing={0.08}
+      >
+        {project.role.toUpperCase()}
+      </Text>
+
+      {/* ========================================================
+          6. INTERACTIVE CALLOUT BUTTON
+          ======================================================== */}
+      <mesh position={[0, -1.28, 0.02]}>
+        <planeGeometry args={[1.8, 0.28]} />
+        <meshStandardMaterial
+          color={hovered ? '#00f0ff' : '#1e1b4b'}
+          emissive={hovered ? '#00f0ff' : '#0f172a'}
+          emissiveIntensity={hovered ? 0.9 : 0.1}
+          roughness={0.3}
+        />
+      </mesh>
+
+      <Text
+        position={[0, -1.28, 0.03]}
+        fontSize={0.075}
+        color={hovered ? '#030206' : '#93c5fd'}
         anchorX="center"
         anchorY="middle"
         fontWeight="bold"
-        letterSpacing={0.06}
+        letterSpacing={0.08}
       >
-        {project.bounty}
+        {hovered ? 'INSPECT ARCHITECTURE ↗' : 'VIEW PROJECT DETAILS'}
       </Text>
-
-      {/* Click indicator hint */}
-      {hovered && (
-        <Text
-          position={[0, -1.35, 0.02]}
-          fontSize={0.08}
-          color="#0e7c86"
-          anchorX="center"
-          anchorY="middle"
-        >
-          [ CLICK FOR DETAILS ]
-        </Text>
-      )}
     </group>
   )
 }
