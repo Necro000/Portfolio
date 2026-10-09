@@ -25,3 +25,6 @@ dist-ssr
 
 # Raw 3D Model Backups
 *.original.glb
+
+# Scratch scripts
+scratch/

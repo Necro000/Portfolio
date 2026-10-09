@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+scratch/
+portfolio-3d/scratch/
+.idea/
+.DS_Store
+*.log

@@ -1,6 +1,6 @@
 // Phase 1, Task 4: mouse parallax (cube from Task 1 and lantern from Task 3 stay).
 
-import { useRef, useState, Suspense } from 'react'
+import { useState, Suspense } from 'react'
 // Canvas = the 3D world. useFrame = code that runs on every rendered frame.
 import { Canvas, useFrame } from '@react-three/fiber'
 

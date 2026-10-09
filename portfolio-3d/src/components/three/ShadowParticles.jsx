@@ -8,16 +8,24 @@ import * as THREE from 'three'
 function ShadowParticles({ count = 500 }) {
   const geometryRef = useRef()
 
-  // Generate initial random particle coordinates across all 6 scene depths (+5 down to -55)
-  // useMemo ensures this heavy array is only computed once when the component mounts
+  // Generate initial particle coordinates deterministically across all 6 scene depths
+  // useMemo ensures this array is only computed once when the component mounts
   const [positions, initialX] = useMemo(() => {
     const pos = new Float32Array(count * 3)
     const initX = new Float32Array(count)
 
     for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 16 // Horizontal spread (-8 to +8)
-      const y = (Math.random() - 0.5) * 12 // Vertical spread (-6 to +6)
-      const z = 5 - Math.random() * 60    // Depth spread (+5 down to -55)
+      // Deterministic pseudo-random generation to ensure render purity
+      const seed1 = Math.sin(i * 12.9898 + 78.233) * 43758.5453
+      const rand1 = seed1 - Math.floor(seed1)
+      const seed2 = Math.sin(i * 39.346 + 11.135) * 43758.5453
+      const rand2 = seed2 - Math.floor(seed2)
+      const seed3 = Math.sin(i * 73.156 + 54.832) * 43758.5453
+      const rand3 = seed3 - Math.floor(seed3)
+
+      const x = (rand1 - 0.5) * 16 // Horizontal spread (-8 to +8)
+      const y = (rand2 - 0.5) * 12 // Vertical spread (-6 to +6)
+      const z = 5 - rand3 * 60     // Depth spread (+5 down to -55)
 
       pos[i * 3] = x
       pos[i * 3 + 1] = y

@@ -1,13 +1,13 @@
 // The 6 full-screen HTML sections corresponding to the 6 3D scenes.
 // Synchronized with scroll position: 100vh height per section.
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import SystemWindow from './SystemWindow'
 import ProjectSpotlight from './ProjectSpotlight'
 import { skills } from '../../data/skills'
-import { projects } from '../../data/projects'
 import { experience } from '../../data/experience'
 import { socials } from '../../data/socials'
+import useReducedMotion from '../../hooks/useReducedMotion'
 // GSAP Timelines for ARISE reveal and LEVEL UP flash (Phase 5, Task 5).
 import { animateAriseReveal, triggerLevelUpAnimation } from '../../utils/animations'
 
@@ -16,11 +16,31 @@ function Sections({ onSelectProject }) {
   // '3d': 100% unobstructed view of the 3D Obsidian Monoliths on the ocean horizon
   // 'deck': Interactive multi-slide browser walkthrough showing login, dashboard, and scanner
   const [projectMode, setProjectMode] = useState('3d')
+  const prefersReducedMotion = useReducedMotion()
+  const videoRef = useRef(null)
 
   // Trigger cinematic letter-by-letter reveal on mount
   useEffect(() => {
     animateAriseReveal('.arise-letter')
   }, [])
+
+  // Respect reduced motion on background video
+  useEffect(() => {
+    if (videoRef.current) {
+      if (prefersReducedMotion) {
+        videoRef.current.pause()
+      } else {
+        videoRef.current.play().catch(() => {})
+      }
+    }
+  }, [prefersReducedMotion])
+
+  function scrollToSection(id) {
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' })
+    }
+  }
 
   return (
     <div className="sections-container">
@@ -43,31 +63,51 @@ function Sections({ onSelectProject }) {
             </h1>
             <p
               style={{
-                margin: '0 0 20px 0',
-                color: '#9b97b3',
-                fontSize: '14px',
+                margin: '0 0 8px 0',
+                color: '#38bdf8',
+                fontSize: '15px',
+                fontWeight: 600,
+                letterSpacing: '0.05em',
               }}
             >
-              Full-Stack & Creative 3D Web Developer
+              Full-Stack Web Developer & AI Systems Developer
+            </p>
+            <p
+              style={{
+                margin: '0 auto 22px auto',
+                color: '#9b97b3',
+                fontSize: '13px',
+                maxWidth: '460px',
+                lineHeight: 1.5,
+              }}
+            >
+              Building scalable React & Next.js platforms, verified REST APIs, and immersive 3D WebGL experiences.
             </p>
 
             <div className="contact-buttons">
               <button
                 type="button"
                 className="btn-cta btn-cta-primary"
-                onClick={() =>
-                  window.scrollTo({ top: 3 * window.innerHeight, behavior: 'smooth' })
-                }
+                onClick={() => scrollToSection('projects')}
               >
-                View Wanted Projects
+                View Projects ⚡
               </button>
               <a
                 href={socials.resume}
-                download
+                download="Sohit-Kumar-Resume.pdf"
                 className="btn-cta btn-cta-outline"
+                aria-label="Download Sohit Kumar Resume PDF"
               >
-                Resume
+                Download Resume 📄
               </a>
+              <button
+                type="button"
+                className="btn-cta btn-cta-outline"
+                onClick={() => scrollToSection('contact')}
+                style={{ fontSize: '12px' }}
+              >
+                Contact
+              </button>
             </div>
           </div>
         </SystemWindow>
@@ -81,38 +121,40 @@ function Sections({ onSelectProject }) {
           {/* Animated Sung Jin-Woo Live Wallpaper Holographic Banner */}
           <div className="hunter-avatar-frame">
             <video
+              ref={videoRef}
               src="/media/jinwoo-live.mp4"
               autoPlay
               loop
               muted
               playsInline
+              preload="metadata"
               className="hunter-avatar-video"
             />
             <div className="hunter-avatar-overlay" />
-            <span className="hunter-avatar-badge">⚡ AWAKENED SHADOW MONARCH</span>
+            <span className="hunter-avatar-badge">⚡ SHADOW MONARCH SYSTEM</span>
           </div>
 
           <div className="status-grid">
             <div className="status-item">
               <span className="status-label">Hunter Name</span>
-              <span className="status-val">Necro</span>
+              <span className="status-val">Sohit Kumar (Necro)</span>
             </div>
             <div className="status-item">
-              <span className="status-label">Class</span>
-              <span className="status-val">Full-Stack Dev</span>
+              <span className="status-label">Role Focus</span>
+              <span className="status-val">Full-Stack & AI</span>
             </div>
             <div className="status-item">
-              <span className="status-label">Rank</span>
-              <span className="status-val">S-Rank Builder</span>
+              <span className="status-label">Education</span>
+              <span className="status-val">MCA (8.67 CGPA)</span>
             </div>
             <div className="status-item">
-              <span className="status-label">Guild</span>
-              <span className="status-val">Open for Hire</span>
+              <span className="status-label">Availability</span>
+              <span className="status-val" style={{ color: '#4ade80' }}>● Open for Roles</span>
             </div>
           </div>
           <p className="status-bio">
-            Developer crafting high-performance full-stack web applications and interactive 3D worlds.
-            Passionate about smooth motion, creative storytelling, and shipping clean, robust code.
+            Full-Stack Web Developer and MCA postgraduate with hands-on internship experience at Innovexis Pvt. Ltd.
+            Specialized in architecting high-performance React 19 & Next.js 15 platforms, Python APIs, and interactive Three.js/WebGL applications with clean, production-ready code.
           </p>
         </SystemWindow>
       </section>
@@ -121,10 +163,10 @@ function Sections({ onSelectProject }) {
           SCENE 2: SKILLS SECTION (Hunter Abilities & Levels)
           ======================================================== */}
       <section className="section" id="skills">
-        <SystemWindow title="SYSTEM STATS: SKILL LEVELS">
+        <SystemWindow title="SYSTEM STATS: SKILL MATRIX">
           {/* Solo Leveling Shadow Monarch Awakening Burst Notification */}
           <div className="level-up-burst-badge">
-            ⚡ SHADOW MONARCH AWAKENING: ALL STATS MAXED! ⚡
+            ⚡ VERIFIED TECHNICAL COMPETENCIES & PROFICIENCY ⚡
           </div>
 
           <div className="skills-list">
@@ -160,19 +202,19 @@ function Sections({ onSelectProject }) {
             </button>
           </div>
 
-          {/* Solo Leveling Daily Quest HUD */}
+          {/* Solo Leveling Quest HUD */}
           <div className="daily-quest-card">
             <div className="daily-quest-header">
-              <span className="daily-quest-title">⚔️ DAILY QUEST: PREPARATION FOR MONARCH</span>
-              <span className="daily-quest-status">COMPLETED</span>
+              <span className="daily-quest-title">⚔️ OBJECTIVES: ENGINEERING SPECIALIZATION</span>
+              <span className="daily-quest-status" style={{ color: '#38bdf8' }}>ACTIVE</span>
             </div>
             <ul className="daily-quest-tasks">
-              <li><span><span className="quest-check">✓</span> Master Three.js & WebGL Shaders</span> <span>[100/100]</span></li>
-              <li><span><span className="quest-check">✓</span> Architect Scalable React Systems</span> <span>[100/100]</span></li>
-              <li><span><span className="quest-check">✓</span> Conquer Full-Stack APIs & Databases</span> <span>[100/100]</span></li>
+              <li><span><span className="quest-check">✓</span> Architect Scalable React 19 & Next.js 15 Platforms</span> <span>[Verified]</span></li>
+              <li><span><span className="quest-check">✓</span> Engineer Production APIs, Databases & Cloud Systems</span> <span>[Verified]</span></li>
+              <li><span><span className="quest-check">✓</span> Agentic AI & 3D WebGL (IIT Roorkee / Three.js)</span> <span>[In Progress]</span></li>
             </ul>
             <div className="daily-quest-reward">
-              🏆 REWARD: S-Rank Developer Title Unlocked
+              🏆 TITLE: Production Full-Stack Engineer
             </div>
           </div>
         </SystemWindow>
@@ -197,13 +239,15 @@ function Sections({ onSelectProject }) {
         {/* Top Tactical HUD Header Bar */}
         <div className="project-hud-header">
           <span className="project-sector-tag">
-            // SECTOR 03: LIVE PRODUCTION ARCHITECTURES //
+            // SECTOR 03: FEATURED ENGINEERING CASE STUDIES //
           </span>
 
           {/* Interactive Mode Switcher */}
           <div className="project-mode-toggle" role="tablist" aria-label="Projects view mode">
             <button
               type="button"
+              role="tab"
+              aria-selected={projectMode === '3d'}
               className={`project-mode-btn ${projectMode === '3d' ? 'active' : ''}`}
               onClick={() => setProjectMode('3d')}
             >
@@ -211,6 +255,8 @@ function Sections({ onSelectProject }) {
             </button>
             <button
               type="button"
+              role="tab"
+              aria-selected={projectMode === 'deck'}
               className={`project-mode-btn ${projectMode === 'deck' ? 'active' : ''}`}
               onClick={() => setProjectMode('deck')}
             >
@@ -245,7 +291,7 @@ function Sections({ onSelectProject }) {
               <div className="stage-hud-meta">
                 <span className="stage-hud-icon">⚡</span>
                 <span>
-                  <strong>3D MONOLITHS ACTIVE:</strong> Hover to tilt obsidian glass • Click any card for forensic UI slides
+                  <strong>3D WANTED MONOLITHS:</strong> Hover to tilt obsidian glass • Click any monolith for deep case study
                 </span>
               </div>
               <button
@@ -253,7 +299,7 @@ function Sections({ onSelectProject }) {
                 className="stage-hud-btn"
                 onClick={() => setProjectMode('deck')}
               >
-                📂 OPEN SLIDE DECK ↗
+                📂 OPEN CASE STUDY DECK ↗
               </button>
             </div>
           </>
@@ -275,30 +321,30 @@ function Sections({ onSelectProject }) {
           SCENE 4: JOURNEY SECTION (Sea Route Milestones)
           ======================================================== */}
       <section className="section" id="journey">
-        <SystemWindow title="LOG POSE: LOGGED VOYAGES">
+        <SystemWindow title="LOG POSE: CAREER & ACADEMIC VOYAGE">
           {/* One Piece Going Merry Expedition Banner */}
           <div className="journey-ship-banner">
             <img src="/media/merry.jpg" alt="Going Merry Voyage" className="journey-ship-img" />
             <div className="journey-ship-overlay" />
-            <span className="journey-ship-badge">⚓ STRAW HAT EXPEDITION ROUTE</span>
+            <span className="journey-ship-badge">⚓ LOG POSE EXPEDITION MILESTONES</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {experience.map((item) => (
               <div
                 key={item.period}
                 style={{
                   borderLeft: '2px solid #0e7c86',
-                  paddingLeft: '12px',
+                  paddingLeft: '14px',
                 }}
               >
-                <div style={{ fontSize: '11px', color: '#0e7c86', fontWeight: 'bold' }}>
-                  {item.period} — {item.role}
+                <div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold' }}>
+                  {item.period} — <span style={{ color: '#0e7c86' }}>{item.role}</span>
                 </div>
-                <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#e9e7f5' }}>
+                <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#e9e7f5', marginTop: '2px' }}>
                   {item.title}
                 </div>
-                <div style={{ fontSize: '12px', color: '#9b97b3', marginTop: '2px' }}>
+                <div style={{ fontSize: '12px', color: '#9b97b3', marginTop: '3px', lineHeight: 1.4 }}>
                   {item.description}
                 </div>
               </div>
@@ -330,34 +376,45 @@ function Sections({ onSelectProject }) {
                 letterSpacing: '0.08em',
               }}
             >
-              READY TO JOIN THE CREW?
+              READY TO COLLABORATE?
             </h2>
-            <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#9b97b3' }}>
-              Have an opening, internship, or freelance project? Let's connect.
+            <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#9b97b3', maxWidth: '440px', marginLeft: 'auto', marginRight: 'auto' }}>
+              Open for full-stack engineering roles, internships, and high-impact web development projects.
             </p>
 
             <div className="contact-buttons">
               <a
                 href={socials.email}
                 className="btn-cta btn-cta-primary"
+                aria-label="Send Email to Sohit Kumar"
               >
-                Send Email
+                Send Email ✉️
               </a>
               <a
                 href={socials.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-cta btn-cta-outline"
+                aria-label="Open GitHub Profile"
               >
-                GitHub
+                GitHub ↗
               </a>
               <a
                 href={socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-cta btn-cta-outline"
+                aria-label="Open LinkedIn Profile"
               >
-                LinkedIn
+                LinkedIn ↗
+              </a>
+              <a
+                href={socials.resume}
+                download="Sohit-Kumar-Resume.pdf"
+                className="btn-cta btn-cta-outline"
+                aria-label="Download Resume"
+              >
+                Resume 📄
               </a>
             </div>
           </div>

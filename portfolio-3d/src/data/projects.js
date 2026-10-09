@@ -1,5 +1,5 @@
-// Real projects created by Necro (Sohit Kumar) showcased as 3D Wanted Posters and Spotlight Deck.
-// 100% authentic project data, live Vercel deployments, and captured UI screenshots across the entire user journey.
+// Authentic engineering project case studies by Sohit Kumar (Necro).
+// Verified technical architecture, live Vercel deployments, and deep technical specs.
 
 export const projects = [
   {
@@ -7,15 +7,28 @@ export const projects = [
     title: 'AI Phishing Detection Platform',
     category: 'CYBERSECURITY & AI INTELLIGENCE',
     bounty: '₿ 3,500,000,000',
+    status: 'Live Web Application',
+    tagline: 'Automated threat assessment platform scanning URLs to calculate security risk scores in real time.',
     description:
-      'Multi-engine AI cybersecurity intelligence platform featuring real-time phishing threat detection, Zero-Trust encrypted gateway, threat console authentication, and enterprise domain analysis.',
+      'Engineered during Web Developer Internship at Innovexis Pvt. Ltd. A real-time threat evaluation platform that inspects domain structures, SSL flags, and anomaly vectors to protect users from credential harvesting and domain spoofing.',
+    problem:
+      'Traditional blacklist-based security tools frequently fail against zero-day phishing campaigns and freshly registered spoofed domains that evade static signatures.',
+    solution:
+      'Engineered an interactive URL threat assessment engine that analyzes domain characteristics, suspicious patterns, and structural anomalies to generate immediate, multi-factor risk telemetry.',
+    contribution:
+      'Built the full-stack user scanner interface, implemented real-time input sanitization & validation, integrated API threat assessment endpoints, and designed the analyst dashboard with risk-scoring breakdowns.',
+    challenges:
+      'Synchronizing multi-engine heuristic checks with low latency to ensure seamless user response times, while handling diverse URL encodings and edge-case redirects.',
+    outcomes:
+      'Successfully deployed to Vercel with dedicated authentication gateway, responsive audit workspace, and instant threat telemetry feedback.',
     highlights: [
-      'Multi-engine AI algorithm detecting real-time phishing anomalies',
-      'Zero-Trust encrypted threat console gateway with TLS 1.3 verification',
-      'Live risk scoring telemetry and domain spoofing analysis pipeline',
+      'Engineered during Web Developer Internship at Innovexis Pvt. Ltd.',
+      'Real-time URL scanner analyzing domain anatomy and threat vectors',
+      'Multi-engine risk calculation interface with detailed forensic reports',
+      'Secure authentication gateway and authenticated analyst workspace',
     ],
-    role: 'Cybersecurity & AI Developer',
-    tech: ['TypeScript', 'React', 'AI Engine', 'Next.js', 'Zero-Trust'],
+    role: 'Web Developer Intern (Innovexis)',
+    tech: ['Next.js 15', 'React', 'TypeScript', 'Python', 'Supabase', 'REST APIs'],
     thumbnail: '/projects/ai-phishing-dashboard.png',
     screenshots: [
       '/projects/ai-phishing.png',
@@ -28,21 +41,24 @@ export const projects = [
         title: 'Threat Console Gateway',
         url: 'https://ai-phishing-detection-platform-rouge.vercel.app/login',
         image: '/projects/ai-phishing.png',
-        caption: 'Zero-Trust gateway authentication with encrypted session access',
+        caption: 'Secure gateway sign-in interface guarding the threat console session',
+        isLive: true,
       },
       {
         label: 'USER WORKSPACE',
         title: 'Logged-in Scanner Workspace',
         url: 'https://ai-phishing-detection-platform-rouge.vercel.app/scan/url',
         image: '/projects/ai-phishing-dashboard.png',
-        caption: 'Active analyst workspace with real-time target domain input & test vectors',
+        caption: 'Active analyst workspace with domain input and real-time vulnerability scan controls',
+        isLive: true,
       },
       {
         label: 'FORENSIC AUDIT',
-        title: 'Quad-Engine Risk Inspector',
+        title: 'Risk Scoring Inspector',
         url: 'https://ai-phishing-detection-platform-rouge.vercel.app',
         image: '/projects/ai-phishing-scanner.png',
-        caption: 'Live HIGH_RISK 92/100 score combining Rules, Safe Browsing, VirusTotal & ML',
+        caption: 'Detailed threat assessment report aggregating risk scores and domain indicators',
+        isLive: true,
       },
     ],
     links: {
@@ -54,17 +70,30 @@ export const projects = [
   {
     id: 'insurance-management-platform',
     title: 'Insurance Management Platform',
-    category: 'ENTERPRISE FULL-STACK SAAS',
+    category: 'ENTERPRISE SAAS WORKFLOW',
     bounty: '₿ 2,800,000,000',
+    status: 'Live Web Application',
+    tagline: 'Enterprise client portal for policy lifecycle administration and interactive claims processing.',
     description:
-      'Enterprise workflow application for policy lifecycle management, claims processing, and user access control with clean authenticated portals and responsive UI.',
+      'Comprehensive web application designed to streamline customer policy tracking, claims administration, and account verification through intuitive client portals and structured data displays.',
+    problem:
+      'Insurance clients and staff struggle with convoluted legacy portals, scattered policy documents, and slow opaque tracking of active insurance claims.',
+    solution:
+      'Created a unified, modern web portal offering self-service claim submission, centralized policy catalogues, and instant status updates in a responsive interface.',
+    contribution:
+      'Architected front-end dashboard workflows, implemented client authentication flows, built searchable policy catalog views, and designed the claims filing lifecycle system.',
+    challenges:
+      'Handling multi-stage form state for claim documents while maintaining high readability and fast navigation across complex policy tiers.',
+    outcomes:
+      'Deployed live to Vercel with complete user authentication, dashboard analytics, and clean policy management interfaces.',
     highlights: [
-      'End-to-end policy lifecycle management and customer record administration',
-      'Claims processing pipeline with role-based access control (RBAC)',
-      'Secure authenticated portal architecture deployed on Vercel',
+      'End-to-end customer portal with authentication and account overview',
+      'Interactive policy catalog with real-time status filtering and search',
+      'Structured claims workflow with status tracking and timeline views',
+      'Responsive enterprise UI styled for desktop and mobile efficiency',
     ],
     role: 'Full-Stack Developer',
-    tech: ['JavaScript', 'React', 'Node.js', 'REST API', 'Auth'],
+    tech: ['React', 'JavaScript', 'Node.js', 'Express', 'Tailwind CSS', 'REST APIs'],
     thumbnail: '/projects/insurance-dashboard.png',
     screenshots: [
       '/projects/insurance.png',
@@ -74,24 +103,27 @@ export const projects = [
     slides: [
       {
         label: 'PORTAL LOGIN',
-        title: 'Customer Authentication',
+        title: 'Client Authentication',
         url: 'https://insurance-management-platform-nu.vercel.app/login',
         image: '/projects/insurance.png',
-        caption: 'Secure client portal sign-in with clean dark-mode authentication',
+        caption: 'Secure client portal sign-in interface with dark-mode styling',
+        isLive: true,
       },
       {
         label: 'USER DASHBOARD',
-        title: 'Logged-in Customer Dashboard',
+        title: 'Customer Dashboard',
         url: 'https://insurance-management-platform-nu.vercel.app/dashboard',
         image: '/projects/insurance-dashboard.png',
-        caption: 'Active client session showing claims workflow, policies & document upload',
+        caption: 'Active client session showing claims workflow, policies, and account metrics',
+        isLive: true,
       },
       {
         label: 'POLICY VIEWER',
         title: 'Policy Management Directory',
         url: 'https://insurance-management-platform-nu.vercel.app/policies',
         image: '/projects/insurance-policies.png',
-        caption: 'Filterable policy catalog with real-time status search and management tools',
+        caption: 'Filterable policy catalog with real-time status search and details view',
+        isLive: true,
       },
     ],
     links: {
@@ -101,43 +133,67 @@ export const projects = [
     featured: true,
   },
   {
-    id: 'arise-3d-portfolio',
-    title: 'ARISE 3D Developer Portfolio',
-    category: 'CREATIVE 3D WEBGL DEVELOPMENT',
-    bounty: '₿ 5,000,000,000',
+    id: 'orbit-cloud-storage',
+    title: 'Orbit – Cloud File Storage',
+    category: 'ENTERPRISE CLOUD ARCHITECTURE',
+    bounty: '₿ 4,800,000,000',
+    status: 'Live Web Application',
+    tagline: 'Full-stack monorepo cloud file storage platform with direct-to-S3 uploads, ACL permissions, and worker queues.',
     description:
-      'High-performance 3D interactive web portfolio blending Solo Leveling and One Piece aesthetics with custom GLSL ocean shaders, React Three Fiber raycasting, and GSAP camera choreography.',
+      'High-performance cloud storage solution featuring nested folder structures, direct-to-S3 uploads, soft-delete trash with 30-day auto-purge, atomic file version rollback, and background thumbnail workers powered by Redis & BullMQ.',
+    problem:
+      'Large file uploads overload application servers, basic storage tools lack fine-grained link permissions with expiration, and managing version history with atomic rollback is complex.',
+    solution:
+      'Architected a modular monorepo utilizing pre-signed direct-to-S3 uploads to bypass server memory limits, BullMQ asynchronous workers for background thumbnail generation, and cryptographic public links with ACL rules.',
+    contribution:
+      'Built the responsive Next.js 16 & React 19 client workspace (grid/list view, breadcrumbs, search, multi-file dropzone), integrated Express REST APIs, configured PostgreSQL schemas with Prisma ORM, and set up Redis worker queues.',
+    challenges:
+      'Implementing atomic version rollback without desynchronizing S3 object state, and orchestrating asynchronous thumbnail generation workers without blocking main event loops.',
+    outcomes:
+      'Deployed live on Vercel with authenticated multi-folder file management, instant search filtering, and secure password-protected link sharing.',
     highlights: [
-      'Custom GLSL ocean wave simulation executing in real-time fragment shaders',
-      'React Three Fiber WebGL canvas with post-processing bloom and vignette',
-      'GSAP smooth camera choreography and responsive touch/DPR performance capping',
+      'Monorepo architecture with Next.js 16, React 19, Express & Tailwind CSS',
+      'Direct-to-S3 pre-signed upload pipeline and BullMQ background workers',
+      'Granular ACL permissions, password-protected links & auto-expiration',
+      'Nested folder hierarchy, soft-delete trash with auto-purge & instant search',
     ],
-    role: 'Creative 3D Full-Stack Developer',
-    tech: ['React', 'Three.js', 'R3F', 'GLSL Shaders', 'GSAP', 'Lenis'],
-    thumbnail: '/projects/portfolio-3d.png',
+    role: 'Full-Stack Architect & Developer',
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Node.js', 'PostgreSQL', 'Redis', 'BullMQ', 'AWS S3', 'Tailwind CSS'],
+    thumbnail: '/projects/orbit-dashboard.png',
     screenshots: [
-      '/projects/portfolio-3d.png',
-      '/og-image.jpg',
+      '/projects/orbit-auth.png',
+      '/projects/orbit-dashboard.png',
+      '/projects/orbit-sharing.png',
     ],
     slides: [
       {
-        label: '3D SCENE',
-        title: 'Ocean Horizon & Lantern',
-        url: 'http://localhost:5173/#hero',
-        image: '/projects/portfolio-3d.png',
-        caption: 'Procedural GLSL Gerstner waves and mouse parallax lighting',
+        label: 'GATEWAY AUTH',
+        title: 'Secure User Authentication',
+        url: 'https://orbit-web-ivory.vercel.app/login',
+        image: '/projects/orbit-auth.png',
+        caption: 'Responsive client authentication gateway with email validation and encrypted session cookies',
+        isLive: true,
       },
       {
-        label: 'SPOTLIGHT DECK',
-        title: 'Cyberpunk Engineering Dossier',
-        url: 'http://localhost:5173/#projects',
-        image: '/og-image.jpg',
-        caption: 'Interactive project spotlight deck with live user journey slides',
+        label: 'DRIVE WORKSPACE',
+        title: 'Cloud File Explorer Workspace',
+        url: 'https://orbit-web-ivory.vercel.app/drive',
+        image: '/projects/orbit-dashboard.png',
+        caption: 'Interactive file explorer with folder tree, search filters, and real-time storage quota telemetry',
+        isLive: true,
+      },
+      {
+        label: 'RETENTION & TRASH',
+        title: 'Storage & 30-Day Purge Lifecycle',
+        url: 'https://orbit-web-ivory.vercel.app/trash',
+        image: '/projects/orbit-sharing.png',
+        caption: 'Soft-delete file recovery pipeline with automated 30-day purge lifecycle and real-time quota synchronization',
+        isLive: true,
       },
     ],
     links: {
-      live: 'https://github.com/Necro000/Portfolio',
-      github: 'https://github.com/Necro000/Portfolio',
+      live: 'https://orbit-web-ivory.vercel.app',
+      github: 'https://github.com/Necro000/Orbit',
     },
     featured: true,
   },

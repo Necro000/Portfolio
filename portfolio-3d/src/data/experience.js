@@ -3,24 +3,32 @@
 
 export const experience = [
   {
-    period: '2023',
-    title: 'Embarked on the Journey',
-    role: 'Self-Taught Developer',
+    period: '2021 – 2024',
+    title: 'Bachelor of Computer Applications (BCA)',
+    role: 'Computer Applications Graduate',
     description:
-      'Started learning HTML, CSS, and modern JavaScript fundamentals. Built foundational web apps and discovered a passion for creative coding.',
+      'Built a rigorous foundation in core computer science, relational databases, software design, and modern web application development.',
   },
   {
-    period: '2024',
-    title: 'Full-Stack Horizons',
-    role: 'Frontend & Backend Builder',
+    period: '2024 – 2026',
+    title: 'Master of Computer Applications (MCA)',
+    role: 'Postgraduate Scholar (CGPA: 8.67 / 10)',
     description:
-      'Mastered React component architecture, Node.js backends, REST APIs, and version control with Git & GitHub.',
+      'Deepened expertise in distributed systems, full-stack architecture, algorithms, and production-grade software engineering principles.',
   },
   {
-    period: 'Present',
-    title: 'Navigating 3D & Creative Web',
-    role: 'Creative Web Developer',
+    period: 'Jul 2026 – Sep 2026',
+    title: 'Web Developer Intern',
+    role: 'Innovexis Pvt. Ltd.',
     description:
-      'Building next-level 3D web experiences using Three.js, React Three Fiber, shaders, and GSAP motion design.',
+      'Engineered full-stack platforms and AI tools, including an automated AI Phishing Detection platform and dynamic RESTful web applications.',
+  },
+  {
+    period: '2026 – Present',
+    title: 'Agentic AI & Creative 3D Web',
+    role: 'Continuous Engineering & Specialization',
+    description:
+      'Pursuing Agentic Systems & Design at iHUB Divyasampark, IIT Roorkee while architecting interactive 3D WebGL experiences with Three.js, R3F, and custom shaders.',
   },
 ]
+

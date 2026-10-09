@@ -441,6 +441,12 @@
   overflow-y: auto;
   position: relative;
   animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 0 45px rgba(58, 183, 255, 0.4), inset 0 0 22px rgba(58, 183, 255, 0.15);
 }
 
 .modal-header {
@@ -982,8 +988,10 @@
 }
 
 .modal-tab-btn:hover {
-  color: var(--system-blue);
-  background: rgba(58, 183, 255, 0.08);
+  color: #ffffff;
+  background: rgba(58, 183, 255, 0.16);
+  border-color: rgba(58, 183, 255, 0.45);
+  box-shadow: 0 0 10px rgba(58, 183, 255, 0.25);
 }
 
 .modal-tab-btn.active {
@@ -1238,16 +1246,18 @@
 }
 
 .spotlight-tab-btn:hover {
-  border-color: rgba(56, 189, 248, 0.5);
+  border-color: #38bdf8;
   color: #ffffff;
-  background: rgba(18, 16, 36, 0.9);
+  background: rgba(56, 189, 248, 0.16);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.3);
+  transform: translateY(-1px);
 }
 
 .spotlight-tab-btn.active {
-  background: rgba(14, 165, 233, 0.18);
+  background: rgba(14, 165, 233, 0.22);
   border-color: var(--system-blue);
   color: #ffffff;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25), inset 0 0 10px rgba(0, 240, 255, 0.1);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.35), inset 0 0 10px rgba(0, 240, 255, 0.15);
 }
 
 .tab-idx {
@@ -1259,7 +1269,7 @@
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 24px;
-  background: rgba(9, 8, 18, 0.85);
+  background: rgba(9, 8, 18, 0.88);
   border: 1px solid rgba(56, 189, 248, 0.3);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -1267,6 +1277,13 @@
   padding: 22px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(123, 44, 191, 0.15);
   align-items: center;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spotlight-display-card:hover {
+  border-color: rgba(0, 240, 255, 0.75);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 240, 255, 0.32), 0 0 25px rgba(99, 102, 241, 0.25);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 900px) {
@@ -1285,6 +1302,12 @@
   overflow: hidden;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
   position: relative;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.spotlight-media-frame:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(56, 189, 248, 0.25);
 }
 
 .spotlight-browser-bar {
@@ -1361,13 +1384,15 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .slide-pill-btn:hover {
-  background: rgba(56, 189, 248, 0.12);
-  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
   color: #fff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+  transform: translateY(-1px);
 }
 
 .slide-pill-btn.active {
@@ -1516,6 +1541,13 @@
   border-radius: 4px;
   padding: 10px 12px;
   margin-bottom: 14px;
+  transition: all 0.25s ease;
+}
+
+.dossier-highlights-block:hover {
+  background: rgba(22, 18, 44, 0.75);
+  border-color: rgba(167, 139, 250, 0.55);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.25);
 }
 
 .highlights-header {
@@ -1567,6 +1599,15 @@
   padding: 3px 8px;
   border-radius: 3px;
   letter-spacing: 0.04em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dossier-tech-pill:hover {
+  background: rgba(56, 189, 248, 0.22);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
 }
 
 .dossier-actions {
@@ -1635,4 +1676,148 @@
   border-color: var(--system-blue);
 }
 
+
+
+/* ==========================================================
+   18. Sprint 1: Recruiter-facing hero, skill chips, contact details
+   ========================================================== */
+.hero-role {
+  margin: 0 0 4px 0;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.hero-tagline {
+  margin: 0 0 6px 0;
+  color: var(--system-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hero-stack {
+  margin: 0 0 4px 0;
+  color: var(--text-dim);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.skill-group + .skill-group {
+  margin-top: 2px;
+}
+
+.skill-group-label {
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.skill-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.skill-chip {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(58, 183, 255, 0.08);
+  border: 1px solid rgba(58, 183, 255, 0.3);
+  border-radius: 2px;
+  padding: 2px 8px;
+}
+
+.contact-details {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 420px;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.contact-details li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.contact-detail-label {
+  flex: 0 0 64px;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contact-details a {
+  pointer-events: auto;
+  color: var(--system-blue);
+  text-decoration: none;
+}
+
+.contact-details a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================
+   19. Focus-Visible Accessibility & Keyboard Navigation
+   ========================================================== */
+:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6) !important;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 2px !important;
+}
+
+.modal-close-btn:focus-visible {
+  outline: 2px solid #f87171 !important;
+  outline-offset: 2px !important;
+  background: rgba(248, 113, 113, 0.2);
+}
+
+.modal-tab-btn:focus-visible,
+.project-mode-btn:focus-visible,
+.spotlight-tab-btn:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 1px !important;
+  background: rgba(56, 189, 248, 0.15);
+}
+
+.slide-nav-arrow:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 2px !important;
+  background: rgba(14, 165, 233, 0.4);
+}
+
+/* Reduced Motion Override for Smooth Elements */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hunter-avatar-video {
+    display: none;
+  }
+}
 
