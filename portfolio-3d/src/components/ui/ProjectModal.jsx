@@ -112,7 +112,7 @@ function ProjectModal({ project, onClose }) {
             <h2 id="project-modal-title" className="modal-title">
               {project.title}
             </h2>
-            <span className="modal-bounty-badge">{project.bounty}</span>
+            <span className="modal-category-badge">{project.badge || project.category}</span>
           </div>
           <button
             type="button"
@@ -217,6 +217,10 @@ function ProjectModal({ project, onClose }) {
                   alt={`${project.title} - ${currentSlide.title}`}
                   className="spotlight-screenshot"
                   loading="eager"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null
+                    e.currentTarget.src = '/projects/sample.jpg'
+                  }}
                 />
 
                 {/* Slider Arrow Controls */}

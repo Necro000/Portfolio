@@ -130,6 +130,10 @@ function ProjectSpotlight({ onSelectProject, onClose }) {
               alt={`${project.title} - ${currentSlide.title}`}
               className="spotlight-screenshot"
               loading="eager"
+              onError={(e) => {
+                e.currentTarget.onerror = null
+                e.currentTarget.src = '/projects/sample.jpg'
+              }}
             />
 
             {/* Slider Arrow Controls */}

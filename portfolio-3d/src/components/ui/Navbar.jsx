@@ -81,6 +81,16 @@ function Navbar() {
             </button>
           </li>
         ))}
+        <li>
+          <a
+            href="/resume.pdf"
+            download="Sohit-Kumar-Resume.pdf"
+            className="navbar-resume-link"
+            aria-label="Download Sohit Kumar Resume PDF"
+          >
+            Resume 📄
+          </a>
+        </li>
       </ul>
     </nav>
     </>

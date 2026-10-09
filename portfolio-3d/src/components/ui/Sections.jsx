@@ -53,6 +53,11 @@ function Sections({ onSelectProject }) {
       <section className="section" id="hero">
         <SystemWindow title="HUNTER STATUS: AWAKENED">
           <div style={{ textAlign: 'center' }}>
+            {/* Candidate Identity Eyebrow */}
+            <div className="hero-identity-tag" style={{ color: '#00f0ff', fontSize: '11px', letterSpacing: '0.14em', fontWeight: 700, marginBottom: '6px' }}>
+              // SOHIT KUMAR • FULL-STACK & REACT DEVELOPER //
+            </div>
+
             {/* GSAP letter-by-letter animated title */}
             <h1 className="arise-title">
               {'ARISE'.split('').map((char, index) => (
@@ -63,25 +68,25 @@ function Sections({ onSelectProject }) {
             </h1>
             <p
               style={{
-                margin: '0 0 8px 0',
+                margin: '0 0 10px 0',
                 color: '#38bdf8',
                 fontSize: '15px',
                 fontWeight: 600,
-                letterSpacing: '0.05em',
+                letterSpacing: '0.04em',
               }}
             >
-              Full-Stack Web Developer & AI Systems Developer
+              Full-Stack Web Developer & React Engineer
             </p>
             <p
               style={{
                 margin: '0 auto 22px auto',
                 color: '#9b97b3',
                 fontSize: '13px',
-                maxWidth: '460px',
-                lineHeight: 1.5,
+                maxWidth: '480px',
+                lineHeight: 1.55,
               }}
             >
-              Building scalable React & Next.js platforms, verified REST APIs, and immersive 3D WebGL experiences.
+              MCA Graduate with hands-on internship experience at Innovexis Pvt. Ltd. Specialized in building modern React 19 & Next.js platforms, verified REST APIs, and interactive 3D WebGL experiences.
             </p>
 
             <div className="contact-buttons">

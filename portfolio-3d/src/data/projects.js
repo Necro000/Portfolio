@@ -1,31 +1,31 @@
-// Authentic engineering project case studies by Sohit Kumar (Necro).
-// Verified technical architecture, live Vercel deployments, and deep technical specs.
+// Verified engineering project case studies by Sohit Kumar.
+// Technical architecture, live deployments, and realistic implementation details.
 
 export const projects = [
   {
     id: 'ai-phishing-detection',
     title: 'AI Phishing Detection Platform',
-    category: 'CYBERSECURITY & AI INTELLIGENCE',
-    bounty: '₿ 3,500,000,000',
+    category: 'CYBERSECURITY & THREAT AUDIT',
+    badge: 'FEATURED • CYBERSECURITY',
     status: 'Live Web Application',
-    tagline: 'Automated threat assessment platform scanning URLs to calculate security risk scores in real time.',
+    tagline: 'Real-time URL threat assessment engine analyzing domain anatomy, SSL flags, and risk scoring.',
     description:
-      'Engineered during Web Developer Internship at Innovexis Pvt. Ltd. A real-time threat evaluation platform that inspects domain structures, SSL flags, and anomaly vectors to protect users from credential harvesting and domain spoofing.',
+      'Engineered during Web Developer Internship at Innovexis Pvt. Ltd. An interactive security tool that inspects domain structures, heuristic indicators, and structural anomalies to help users detect phishing attempts and spoofed domains.',
     problem:
-      'Traditional blacklist-based security tools frequently fail against zero-day phishing campaigns and freshly registered spoofed domains that evade static signatures.',
+      'Static blacklist-based tools frequently lag behind zero-day phishing campaigns and freshly registered deceptive domains that mimic legitimate brands.',
     solution:
-      'Engineered an interactive URL threat assessment engine that analyzes domain characteristics, suspicious patterns, and structural anomalies to generate immediate, multi-factor risk telemetry.',
+      'Engineered a multi-factor URL analysis interface that evaluates domain characteristics, redirect chains, and risk indicators to generate instant telemetry and confidence scores.',
     contribution:
-      'Built the full-stack user scanner interface, implemented real-time input sanitization & validation, integrated API threat assessment endpoints, and designed the analyst dashboard with risk-scoring breakdowns.',
+      'Built the full-stack user scanner interface, implemented client-side input validation, connected backend threat assessment endpoints, and designed the analyst dashboard with risk-scoring breakdowns.',
     challenges:
-      'Synchronizing multi-engine heuristic checks with low latency to ensure seamless user response times, while handling diverse URL encodings and edge-case redirects.',
+      'Handling diverse URL encodings, internationalized domain names, and parsing edge-case redirects while keeping scan evaluation times low.',
     outcomes:
-      'Successfully deployed to Vercel with dedicated authentication gateway, responsive audit workspace, and instant threat telemetry feedback.',
+      'Deployed live on Vercel with dedicated authentication gateway, responsive audit workspace, and instant threat telemetry feedback.',
     highlights: [
       'Engineered during Web Developer Internship at Innovexis Pvt. Ltd.',
       'Real-time URL scanner analyzing domain anatomy and threat vectors',
-      'Multi-engine risk calculation interface with detailed forensic reports',
-      'Secure authentication gateway and authenticated analyst workspace',
+      'Multi-engine risk calculation interface with detailed inspection reports',
+      'Dedicated authentication gateway and authenticated analyst workspace',
     ],
     role: 'Web Developer Intern (Innovexis)',
     tech: ['Next.js 15', 'React', 'TypeScript', 'Python', 'Supabase', 'REST APIs'],
@@ -41,15 +41,15 @@ export const projects = [
         title: 'Threat Console Gateway',
         url: 'https://ai-phishing-detection-platform-rouge.vercel.app/login',
         image: '/projects/ai-phishing.png',
-        caption: 'Secure gateway sign-in interface guarding the threat console session',
+        caption: 'Authentication gateway guarding the analyst scanning console',
         isLive: true,
       },
       {
         label: 'USER WORKSPACE',
-        title: 'Logged-in Scanner Workspace',
+        title: 'Interactive Scanner Workspace',
         url: 'https://ai-phishing-detection-platform-rouge.vercel.app/scan/url',
         image: '/projects/ai-phishing-dashboard.png',
-        caption: 'Active analyst workspace with domain input and real-time vulnerability scan controls',
+        caption: 'Active scanner workspace with domain input and real-time vulnerability scan controls',
         isLive: true,
       },
       {
@@ -71,23 +71,23 @@ export const projects = [
     id: 'insurance-management-platform',
     title: 'Insurance Management Platform',
     category: 'ENTERPRISE SAAS WORKFLOW',
-    bounty: '₿ 2,800,000,000',
+    badge: 'ENTERPRISE SAAS',
     status: 'Live Web Application',
-    tagline: 'Enterprise client portal for policy lifecycle administration and interactive claims processing.',
+    tagline: 'Client portal for policy lifecycle administration and interactive claims processing.',
     description:
-      'Comprehensive web application designed to streamline customer policy tracking, claims administration, and account verification through intuitive client portals and structured data displays.',
+      'Web application designed to streamline customer policy tracking, claims administration, and account management through intuitive client portals and structured data displays.',
     problem:
-      'Insurance clients and staff struggle with convoluted legacy portals, scattered policy documents, and slow opaque tracking of active insurance claims.',
+      'Policyholders and service agents struggle with convoluted paper-heavy portals, scattered documentation, and opaque tracking of active claim statuses.',
     solution:
-      'Created a unified, modern web portal offering self-service claim submission, centralized policy catalogues, and instant status updates in a responsive interface.',
+      'Created a modern client dashboard offering self-service claim submission, centralized policy directories, and instant status updates in a responsive interface.',
     contribution:
-      'Architected front-end dashboard workflows, implemented client authentication flows, built searchable policy catalog views, and designed the claims filing lifecycle system.',
+      'Built front-end dashboard workflows, implemented client authentication flows, built searchable policy catalog views, and designed the claims filing lifecycle system.',
     challenges:
-      'Handling multi-stage form state for claim documents while maintaining high readability and fast navigation across complex policy tiers.',
+      'Managing multi-stage form state for claim documents while maintaining high readability and fast navigation across policy tiers.',
     outcomes:
-      'Deployed live to Vercel with complete user authentication, dashboard analytics, and clean policy management interfaces.',
+      'Deployed live on Vercel with customer authentication, dashboard overview, and clean policy management interfaces.',
     highlights: [
-      'End-to-end customer portal with authentication and account overview',
+      'Customer portal with authentication and account overview',
       'Interactive policy catalog with real-time status filtering and search',
       'Structured claims workflow with status tracking and timeline views',
       'Responsive enterprise UI styled for desktop and mobile efficiency',
@@ -106,7 +106,7 @@ export const projects = [
         title: 'Client Authentication',
         url: 'https://insurance-management-platform-nu.vercel.app/login',
         image: '/projects/insurance.png',
-        caption: 'Secure client portal sign-in interface with dark-mode styling',
+        caption: 'Client portal sign-in interface with dark-mode styling',
         isLive: true,
       },
       {
@@ -135,30 +135,30 @@ export const projects = [
   {
     id: 'orbit-cloud-storage',
     title: 'Orbit – Cloud File Storage',
-    category: 'ENTERPRISE CLOUD ARCHITECTURE',
-    bounty: '₿ 4,800,000,000',
+    category: 'FULL-STACK CLOUD PLATFORM',
+    badge: 'FEATURED • CLOUD STORAGE',
     status: 'Live Web Application',
-    tagline: 'Full-stack monorepo cloud file storage platform with direct-to-S3 uploads, ACL permissions, and worker queues.',
+    tagline: 'Modern cloud file manager featuring nested folder hierarchies, search filters, and storage telemetry.',
     description:
-      'High-performance cloud storage solution featuring nested folder structures, direct-to-S3 uploads, soft-delete trash with 30-day auto-purge, atomic file version rollback, and background thumbnail workers powered by Redis & BullMQ.',
+      'Full-stack cloud file storage platform featuring multi-folder hierarchies, file uploads, real-time storage quota tracking, soft-deletion trash with 30-day auto-purge policy, and share link management.',
     problem:
-      'Large file uploads overload application servers, basic storage tools lack fine-grained link permissions with expiration, and managing version history with atomic rollback is complex.',
+      'Users require a clean, responsive storage hub to organize assets across nested folders without complex overhead or cluttered interfaces.',
     solution:
-      'Architected a modular monorepo utilizing pre-signed direct-to-S3 uploads to bypass server memory limits, BullMQ asynchronous workers for background thumbnail generation, and cryptographic public links with ACL rules.',
+      'Built a full-stack Next.js and Express platform featuring intuitive folder hierarchies, quick-filter search, trash retention lifecycle, and responsive storage monitoring.',
     contribution:
-      'Built the responsive Next.js 16 & React 19 client workspace (grid/list view, breadcrumbs, search, multi-file dropzone), integrated Express REST APIs, configured PostgreSQL schemas with Prisma ORM, and set up Redis worker queues.',
+      'Developed the Next.js 16 & React 19 client workspace (grid/list view, breadcrumbs, search, folder management), integrated backend REST APIs, and structured storage tracking.',
     challenges:
-      'Implementing atomic version rollback without desynchronizing S3 object state, and orchestrating asynchronous thumbnail generation workers without blocking main event loops.',
+      'Orchestrating synchronized client-side state between nested folders, breadcrumb navigation, and real-time storage quota meters.',
     outcomes:
-      'Deployed live on Vercel with authenticated multi-folder file management, instant search filtering, and secure password-protected link sharing.',
+      'Deployed live on Vercel with authenticated multi-folder file management, instant search filtering, and clean responsive UI.',
     highlights: [
-      'Monorepo architecture with Next.js 16, React 19, Express & Tailwind CSS',
-      'Direct-to-S3 pre-signed upload pipeline and BullMQ background workers',
-      'Granular ACL permissions, password-protected links & auto-expiration',
-      'Nested folder hierarchy, soft-delete trash with auto-purge & instant search',
+      'Modern web application built with Next.js 16, React 19, and Tailwind CSS',
+      'Hierarchical folder management with breadcrumb navigation',
+      'Real-time storage quota meter and file type category filters',
+      'Soft-delete trash section with 30-day retention auto-purge notice',
     ],
-    role: 'Full-Stack Architect & Developer',
-    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Node.js', 'PostgreSQL', 'Redis', 'BullMQ', 'AWS S3', 'Tailwind CSS'],
+    role: 'Full-Stack Developer',
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Tailwind CSS'],
     thumbnail: '/projects/orbit-dashboard.png',
     screenshots: [
       '/projects/orbit-auth.png',
@@ -171,7 +171,7 @@ export const projects = [
         title: 'Secure User Authentication',
         url: 'https://orbit-web-ivory.vercel.app/login',
         image: '/projects/orbit-auth.png',
-        caption: 'Responsive client authentication gateway with email validation and encrypted session cookies',
+        caption: 'Responsive client authentication gateway with email validation and session management',
         isLive: true,
       },
       {

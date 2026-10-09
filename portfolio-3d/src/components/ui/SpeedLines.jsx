@@ -1,16 +1,17 @@
-// Phase 5, Task 6: Manga Speed Lines / Impact Frames.
+// Manga Speed Lines / Impact Frames.
 // Activates on rapid scroll velocity or section jumps, simulating anime warp momentum.
+// Tuned for high readability: pauses during modal inspection and respects reduced-motion.
 
 import { useEffect, useRef } from 'react'
 import useReducedMotion from '../../hooks/useReducedMotion'
 
-function SpeedLines() {
+function SpeedLines({ isModalOpen = false }) {
   const canvasRef = useRef(null)
   const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
-    // If user prefers reduced motion, disable the speed lines canvas loop completely
-    if (prefersReducedMotion) return
+    // If reduced motion is requested or modal is open, do not run speed lines
+    if (prefersReducedMotion || isModalOpen) return
 
     const canvas = canvasRef.current
     if (!canvas) return
@@ -28,68 +29,85 @@ function SpeedLines() {
 
     let lastScrollY = window.scrollY
     let intensity = 0
+    let isRunning = false
 
-    // Animation render loop
-    function loop() {
+    function startLoop() {
+      if (!isRunning) {
+        isRunning = true
+        animationFrameId = requestAnimationFrame(loop)
+      }
+    }
+
+    function handleScroll() {
       const currentScrollY = window.scrollY
       const scrollDelta = Math.abs(currentScrollY - lastScrollY)
       lastScrollY = currentScrollY
 
-      // Accelerate intensity when scrolling fast
-      if (scrollDelta > 3) {
-        intensity = Math.min(intensity + scrollDelta * 0.03, 1.2)
-      } else {
-        // Smoothly decay intensity when scroll slows down
-        intensity *= 0.88
+      // Accelerate intensity when scrolling fast, capped conservatively
+      if (scrollDelta > 4) {
+        intensity = Math.min(intensity + scrollDelta * 0.015, 0.7)
+        startLoop()
       }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    // Animation render loop
+    function loop() {
+      intensity *= 0.82 // Smooth decay
 
       ctx.clearRect(0, 0, width, height)
 
-      // Only draw when there is enough momentum
-      if (intensity > 0.06) {
+      // Only draw when there is active momentum
+      if (intensity > 0.04) {
         const cx = width / 2
         const cy = height / 2
-        const lineCount = Math.floor(45 * Math.min(intensity, 1))
+        // Subdued line count so text readability is never compromised
+        const lineCount = Math.floor(24 * Math.min(intensity, 1))
 
-        ctx.lineWidth = 1.5
+        ctx.lineWidth = 1.2
 
         for (let i = 0; i < lineCount; i++) {
           const angle = Math.random() * Math.PI * 2
-          const innerDist = Math.min(width, height) * 0.28 // Keep center clear for content
-          const outerDist = Math.max(width, height) * 0.9
+          // Keep center clear for content reading (45% radius)
+          const innerDist = Math.min(width, height) * 0.44
+          const outerDist = Math.max(width, height) * 0.95
 
-          const x1 = cx + Math.cos(angle) * (innerDist + Math.random() * 80)
-          const y1 = cy + Math.sin(angle) * (innerDist + Math.random() * 80)
+          const x1 = cx + Math.cos(angle) * (innerDist + Math.random() * 60)
+          const y1 = cy + Math.sin(angle) * (innerDist + Math.random() * 60)
           const x2 = cx + Math.cos(angle) * outerDist
           const y2 = cy + Math.sin(angle) * outerDist
 
-          // Randomize between cyan and white speed lines
-          const isCyan = Math.random() > 0.4
-          const alpha = (Math.random() * 0.5 + 0.3) * Math.min(intensity, 1)
+          // Gentle alpha values (max ~0.3)
+          const isCyan = Math.random() > 0.45
+          const alpha = (Math.random() * 0.2 + 0.1) * Math.min(intensity, 1)
 
           ctx.strokeStyle = isCyan
             ? `rgba(58, 183, 255, ${alpha})`
-            : `rgba(255, 255, 255, ${alpha * 0.8})`
+            : `rgba(255, 255, 255, ${alpha * 0.7})`
 
           ctx.beginPath()
           ctx.moveTo(x1, y1)
           ctx.lineTo(x2, y2)
           ctx.stroke()
         }
+
+        animationFrameId = requestAnimationFrame(loop)
+      } else {
+        // Stopped decaying, clear and sleep until next scroll event
+        ctx.clearRect(0, 0, width, height)
+        isRunning = false
       }
-
-      animationFrameId = requestAnimationFrame(loop)
     }
-
-    animationFrameId = requestAnimationFrame(loop)
 
     return () => {
       cancelAnimationFrame(animationFrameId)
       window.removeEventListener('resize', handleResize)
+      window.removeEventListener('scroll', handleScroll)
     }
-  }, [prefersReducedMotion])
+  }, [prefersReducedMotion, isModalOpen])
 
-  if (prefersReducedMotion) return null
+  if (prefersReducedMotion || isModalOpen) return null
 
   return (
     <canvas
@@ -98,7 +116,7 @@ function SpeedLines() {
         position: 'fixed',
         inset: 0,
         pointerEvents: 'none',
-        zIndex: 90,
+        zIndex: 3, // Placed behind UI system cards and modals
       }}
     />
   )
