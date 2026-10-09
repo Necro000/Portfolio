@@ -97,21 +97,12 @@ function Sections({ onSelectProject }) {
               >
                 View Projects ⚡
               </button>
-              <a
-                href={socials.resume}
-                download="Sohit-Kumar-Resume.pdf"
-                className="btn-cta btn-cta-outline"
-                aria-label="Download Sohit Kumar Resume PDF"
-              >
-                Download Resume 📄
-              </a>
               <button
                 type="button"
                 className="btn-cta btn-cta-outline"
                 onClick={() => scrollToSection('contact')}
-                style={{ fontSize: '12px' }}
               >
-                Contact
+                Get In Touch →
               </button>
             </div>
           </div>
@@ -393,7 +384,11 @@ function Sections({ onSelectProject }) {
                 className="btn-cta btn-cta-primary"
                 aria-label="Send Email to Sohit Kumar"
               >
-                Send Email ✉️
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+                Send Email
               </a>
               <a
                 href={socials.github}
@@ -402,7 +397,12 @@ function Sections({ onSelectProject }) {
                 className="btn-cta btn-cta-outline"
                 aria-label="Open GitHub Profile"
               >
-                GitHub ↗
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                GitHub
               </a>
               <a
                 href={socials.linkedin}
@@ -411,15 +411,25 @@ function Sections({ onSelectProject }) {
                 className="btn-cta btn-cta-outline"
                 aria-label="Open LinkedIn Profile"
               >
-                LinkedIn ↗
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                LinkedIn
               </a>
               <a
                 href={socials.resume}
                 download="Sohit-Kumar-Resume.pdf"
                 className="btn-cta btn-cta-outline"
-                aria-label="Download Resume"
+                aria-label="Download Sohit Kumar Resume PDF"
               >
-                Resume 📄
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Resume
               </a>
             </div>
           </div>
