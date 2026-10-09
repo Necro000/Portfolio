@@ -13,32 +13,47 @@ function Navbar() {
   // Listen to window scroll to determine which scene is currently in view
   useEffect(() => {
     function handleScroll() {
-      const scrollY = window.scrollY
-      const sceneHeight = window.innerHeight
-      // Calculate current scene index (0 to 5)
-      const currentIndex = Math.min(
-        Math.floor((scrollY + sceneHeight * 0.3) / sceneHeight),
-        SCENES.length - 1
-      )
-      setActiveSection(currentIndex)
+      const sceneElements = SCENES.map((s) => document.getElementById(s.id))
+      let foundIndex = 0
+
+      for (let i = 0; i < sceneElements.length; i++) {
+        const el = sceneElements[i]
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          // If the element's top is near or above the upper middle of the viewport
+          if (rect.top <= window.innerHeight * 0.45) {
+            foundIndex = i
+          }
+        }
+      }
+      setActiveSection(foundIndex)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Smoothly scroll to a selected section with anime impact frame
+  // Smoothly scroll to a selected section with element anchoring and anime impact frame
   function scrollToSection(index) {
     if (index !== activeSection && !prefersReducedMotion) {
       setIsImpactActive(true)
       setTimeout(() => setIsImpactActive(false), 220)
     }
 
-    const targetY = index * window.innerHeight
-    window.scrollTo({
-      top: targetY,
-      behavior: 'smooth',
-    })
+    const scene = SCENES[index]
+    const targetEl = scene ? document.getElementById(scene.id) : null
+
+    if (targetEl) {
+      targetEl.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      })
+    } else {
+      window.scrollTo({
+        top: index * window.innerHeight,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      })
+    }
   }
 
   // Calculate rotation angle for the compass needle (60 degrees per section: 0 to 300)

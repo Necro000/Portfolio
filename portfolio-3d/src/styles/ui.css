@@ -724,6 +724,24 @@ a:focus-visible {
   .section {
     padding: 70px 14px 20px 14px;
   }
+
+  .contact-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 380px;
+    margin: 16px auto 0 auto;
+  }
+
+  .contact-buttons .btn-cta {
+    width: 100%;
+    padding: 10px 8px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-align: center;
+    box-sizing: border-box;
+  }
 }
 
 /* ==========================================================

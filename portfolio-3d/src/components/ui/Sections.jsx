@@ -364,12 +364,12 @@ function Sections({ onSelectProject }) {
       <section className="section" id="contact">
         <SystemWindow title="SYSTEM TRANSMISSION: CONTACT">
           <div style={{ textAlign: 'center' }}>
-            {/* One Piece Animated Transponder Snail (Den Den Mushi) Communicator */}
+            {/* One Piece Animated Transponder Snail Communicator */}
             <div className="den-den-mushi-box">
-              <span className="den-den-mushi-icon" role="img" aria-label="Transponder Snail">🐌📞</span>
+              <span className="den-den-mushi-icon" role="img" aria-label="Direct Communication Channel">🐌📞</span>
               <div className="den-den-mushi-text">
-                <span className="den-den-ring">PURU PURU PURU... GACHA!</span>
-                <span className="den-den-sub">DEN DEN MUSHI READY FOR TRANSMISSION</span>
+                <span className="den-den-ring">COMMUNICATION FREQUENCY // ACTIVE</span>
+                <span className="den-den-sub">OPEN FOR FULL-STACK ROLES & INQUIRIES</span>
               </div>
             </div>
 
@@ -383,8 +383,8 @@ function Sections({ onSelectProject }) {
             >
               READY TO COLLABORATE?
             </h2>
-            <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#9b97b3', maxWidth: '440px', marginLeft: 'auto', marginRight: 'auto' }}>
-              Open for full-stack engineering roles, internships, and high-impact web development projects.
+            <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#9b97b3', maxWidth: '460px', marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.55 }}>
+              Actively seeking full-stack engineering roles, frontend development, and technical opportunities. Fast response via direct email or LinkedIn.
             </p>
 
             <div className="contact-buttons">
