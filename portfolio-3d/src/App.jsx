@@ -19,6 +19,7 @@ import { SCENES } from './utils/constants'
 import Effects from './components/three/Effects'
 import ShadowParticles from './components/three/ShadowParticles'
 import Ocean from './components/three/Ocean'
+import KineticRails from './components/ui/KineticRails'
 
 // Code-split ProjectModal to reduce initial bundle size; loaded on-demand when a project is clicked
 const ProjectModal = lazy(() => import('./components/ui/ProjectModal'))
@@ -99,6 +100,9 @@ function App() {
 
       {/* Manga Speed Lines (automatically pauses when modal is open or when reduced-motion is active) */}
       <SpeedLines isModalOpen={isModalOpen} />
+
+      {/* Kinetic HUD Rail Typography in Parallax Motion */}
+      <KineticRails />
 
       {/* Cyberpunk HUD Cursor */}
       <CustomCursor />
