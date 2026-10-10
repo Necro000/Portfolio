@@ -44,6 +44,16 @@ function PlaceholderScene({ scene, index, onSelectProject, isMobile = false }) {
     )
   }
 
+  // 2. SCENE 5 (CONTACT): 3D Monarch Horizon Volumetric Beacon over the Ocean
+  if (scene.id === 'contact') {
+    return (
+      <group position={[0, 0.6, z - 2]} scale={isMobile ? 0.7 : 1.15}>
+        <pointLight position={[0, 2, 2]} intensity={45} color="#00f0ff" distance={10} />
+        <pointLight position={[0, -0.5, 1]} intensity={35} color="#f59e0b" distance={8} />
+      </group>
+    )
+  }
+
   // All other scenes: Keep background clean and cinematic (ocean + particles + HUD)
   return null
 }

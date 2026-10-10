@@ -6,10 +6,11 @@ import SystemWindow from './SystemWindow'
 import ProjectSpotlight from './ProjectSpotlight'
 import { skills } from '../../data/skills'
 import { experience } from '../../data/experience'
-import ContactTerminal from './ContactTerminal'
+import { socials } from '../../data/socials'
 import useReducedMotion from '../../hooks/useReducedMotion'
 // GSAP Timelines for ARISE reveal and LEVEL UP flash (Phase 5, Task 5).
 import { animateAriseReveal, triggerLevelUpAnimation } from '../../utils/animations'
+import MonarchFinale from './MonarchFinale'
 
 function Sections({ onSelectProject }) {
   // Dual-mode view for Scene 3 (#projects):
@@ -353,10 +354,93 @@ function Sections({ onSelectProject }) {
           SCENE 5: CONTACT SECTION (Final Summons)
           ======================================================== */}
       <section className="section" id="contact">
-        <SystemWindow title="SYSTEM TRANSMISSION: CONTACT & FINALE">
-          <ContactTerminal />
+        <SystemWindow title="SYSTEM TRANSMISSION: CONTACT">
+          <div style={{ textAlign: 'center' }}>
+            {/* One Piece Animated Transponder Snail Communicator */}
+            <div className="den-den-mushi-box">
+              <span className="den-den-mushi-icon" role="img" aria-label="Direct Communication Channel">🐌📞</span>
+              <div className="den-den-mushi-text">
+                <span className="den-den-ring">COMMUNICATION FREQUENCY // ACTIVE</span>
+                <span className="den-den-sub">OPEN FOR FULL-STACK ROLES & INQUIRIES</span>
+              </div>
+            </div>
+
+            <h2
+              style={{
+                margin: '0 0 8px 0',
+                fontSize: '22px',
+                color: '#e9e7f5',
+                letterSpacing: '0.08em',
+              }}
+            >
+              READY TO COLLABORATE?
+            </h2>
+            <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: '#9b97b3', maxWidth: '460px', marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.55 }}>
+              Actively seeking full-stack engineering roles, frontend development, and technical opportunities. Fast response via direct email or LinkedIn.
+            </p>
+
+            <div className="contact-buttons">
+              <a
+                href={socials.email}
+                className="btn-cta btn-cta-primary"
+                aria-label="Send Email to Sohit Kumar"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+                Send Email
+              </a>
+              <a
+                href={socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-cta btn-cta-outline"
+                aria-label="Open GitHub Profile"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                GitHub
+              </a>
+              <a
+                href={socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-cta btn-cta-outline"
+                aria-label="Open LinkedIn Profile"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                LinkedIn
+              </a>
+              <a
+                href={socials.resume}
+                download="Sohit-Kumar-Resume.pdf"
+                className="btn-cta btn-cta-outline"
+                aria-label="Download Sohit Kumar Resume PDF"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Resume
+              </a>
+            </div>
+          </div>
         </SystemWindow>
       </section>
+
+      {/* ========================================================
+          GRAND FINALE: THE MONARCH THRONE & TELEPORT TO TOP
+          ======================================================== */}
+      <MonarchFinale />
     </div>
   )
 }
