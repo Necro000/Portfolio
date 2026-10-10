@@ -20,6 +20,8 @@ import Effects from './components/three/Effects'
 import ShadowParticles from './components/three/ShadowParticles'
 import Ocean from './components/three/Ocean'
 import KineticRails from './components/ui/KineticRails'
+import Monarch3DHologram from './components/three/Monarch3DHologram'
+import HunterDossier from './components/ui/HunterDossier'
 
 // Code-split ProjectModal to reduce initial bundle size; loaded on-demand when a project is clicked
 const ProjectModal = lazy(() => import('./components/ui/ProjectModal'))
@@ -78,6 +80,7 @@ function App() {
 
           <ShadowParticles count={isMobile ? 150 : 500} />
           <Ocean />
+          <Monarch3DHologram isMobile={isMobile} />
           <Effects />
         </Canvas>
 
@@ -103,6 +106,9 @@ function App() {
 
       {/* Kinetic HUD Rail Typography in Parallax Motion */}
       <KineticRails />
+
+      {/* Interactive Hunter Dossier HUD System Window (Approach 3) */}
+      <HunterDossier />
 
       {/* Cyberpunk HUD Cursor */}
       <CustomCursor />

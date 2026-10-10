@@ -1,7 +1,6 @@
-// Option B: Kinetic HUD Rail Typography in Parallax Motion.
-// Renders dual futuristic vertical kinetic ticker rails along the viewport margins.
-// Left and right rails glide in opposing directions based on scroll velocity and ambient crawl.
-// Automatically respects reduced-motion and hides on compact mobile screens.
+// Kinetic HUD Rail Typography in Parallax Motion.
+// Seamless mathematical looping ticker that glides continuously with scroll velocity.
+// Zero jumps, zero modulo stutter, respects reduced motion, and hides on compact mobile.
 
 import { useEffect, useRef } from 'react'
 import useReducedMotion from '../../hooks/useReducedMotion'
@@ -24,23 +23,23 @@ function KineticRails() {
       const delta = currentScrollY - lastScrollY
       lastScrollY = currentScrollY
 
-      // Ambient baseline crawl + dynamic scroll velocity multiplier
-      // Left rail drifts downward on scroll down
-      leftOffset += 0.35 + delta * 0.4
-      // Right rail flows upward on scroll down (opposing velocity creates 3D depth)
-      rightOffset -= 0.35 + delta * 0.4
-
-      // Keep offset within looping bounds (-1000 to 1000)
-      if (leftOffset > 1000) leftOffset -= 1000
-      if (leftOffset < -1000) leftOffset += 1000
-      if (rightOffset > 1000) rightOffset -= 1000
-      if (rightOffset < -1000) rightOffset += 1000
+      // Smooth ambient crawl + dampened scroll velocity
+      leftOffset += 0.25 + delta * 0.2
+      rightOffset -= 0.25 + delta * 0.2
 
       if (leftRailRef.current) {
-        leftRailRef.current.style.transform = `translate3d(0, ${leftOffset % 320}px, 0)`
+        // Half the scrollHeight represents one exact duplicated set
+        const halfHeight = leftRailRef.current.scrollHeight / 2 || 600
+        let normLeft = leftOffset % halfHeight
+        if (normLeft < 0) normLeft += halfHeight
+        leftRailRef.current.style.transform = `translate3d(0, ${-normLeft}px, 0)`
       }
+
       if (rightRailRef.current) {
-        rightRailRef.current.style.transform = `translate3d(0, ${rightOffset % 320}px, 0)`
+        const halfHeight = rightRailRef.current.scrollHeight / 2 || 600
+        let normRight = rightOffset % halfHeight
+        if (normRight < 0) normRight += halfHeight
+        rightRailRef.current.style.transform = `translate3d(0, ${-normRight}px, 0)`
       }
 
       animationFrameId = requestAnimationFrame(loop)
@@ -53,26 +52,25 @@ function KineticRails() {
 
   if (prefersReducedMotion) return null
 
-  const leftPhrases = [
+  const baseLeftPhrases = [
     'SYSTEM AWAKENING',
     'SHADOW MONARCH PROTOCOL',
     'ARISE // 覚醒',
     'HUNTER STATUS: LEVEL MAX',
     'MONARCH DOMAIN ACTIVE',
-    'SYSTEM AWAKENING',
-    'SHADOW MONARCH PROTOCOL',
-    'ARISE // 覚醒',
   ]
 
-  const rightPhrases = [
+  const baseRightPhrases = [
     'SECTOR TELEMETRY // 03',
     'GRAND LINE LOG POSE // 航海',
     'ELEVATION 1440m // VECTOR 3D',
     'AUTONOMOUS ENGINE ACTIVE',
     'CHRONO RECORD // VOYAGE',
-    'SECTOR TELEMETRY // 03',
-    'GRAND LINE LOG POSE // 航海',
   ]
+
+  // Duplicate arrays to guarantee mathematically seamless infinite wrapping
+  const leftPhrases = [...baseLeftPhrases, ...baseLeftPhrases]
+  const rightPhrases = [...baseRightPhrases, ...baseRightPhrases]
 
   return (
     <div className="kinetic-hud-rails" aria-hidden="true">

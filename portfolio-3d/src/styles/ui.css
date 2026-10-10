@@ -1934,3 +1934,470 @@ a:focus-visible {
   }
 }
 
+/* ==========================================================
+   Approach 3: Interactive Hunter Dossier (System Window)
+   ========================================================== */
+.hunter-dossier-trigger {
+  position: fixed;
+  bottom: 24px;
+  right: 28px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: rgba(7, 6, 15, 0.88);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  border-radius: 4px;
+  color: #00f0ff;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.18), inset 0 0 10px rgba(0, 240, 255, 0.08);
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.hunter-dossier-trigger:hover {
+  background: rgba(0, 240, 255, 0.12);
+  border-color: #00f0ff;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.45);
+  transform: translateY(-2px);
+}
+
+.trigger-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00f0ff;
+  box-shadow: 0 0 8px #00f0ff;
+  animation: dossierPulse 1.8s infinite;
+}
+
+@keyframes dossierPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+.trigger-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 2px;
+  color: #fff;
+}
+
+/* Dossier Modal Overlay */
+.dossier-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(4, 3, 10, 0.78);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dossier-window {
+  width: min(920px, 94vw);
+  max-height: 90vh;
+  background: rgba(9, 10, 20, 0.96);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 0 50px rgba(0, 240, 255, 0.18), inset 0 0 20px rgba(0, 240, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: dossierPop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dossierPop {
+  0% { transform: scale(0.94); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Header */
+.dossier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  background: rgba(0, 240, 255, 0.04);
+}
+
+.dossier-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dossier-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00f0ff;
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+.dossier-title {
+  margin: 0;
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.dossier-close-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dossier-close-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* Tabs */
+.dossier-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dossier-tab {
+  flex: 1;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: rgba(148, 163, 184, 0.7);
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dossier-tab:hover {
+  color: #fff;
+}
+
+.dossier-tab.active {
+  color: #00f0ff;
+  border-bottom-color: #00f0ff;
+  background: rgba(0, 240, 255, 0.06);
+}
+
+/* Body */
+.dossier-body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  padding: 24px;
+  gap: 28px;
+  overflow-y: auto;
+  max-height: calc(90vh - 120px);
+}
+
+@media (max-width: 860px) {
+  .dossier-body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Character Hologram Stage */
+.dossier-character-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.dossier-hologram-stage {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: radial-gradient(circle at center, rgba(0, 240, 255, 0.08) 0%, rgba(0, 0, 0, 0.4) 75%);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.stage-char-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.45));
+  animation: stageFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes stageFloat {
+  0% { transform: translateY(3px) scale(0.98); }
+  100% { transform: translateY(-4px) scale(1.01); }
+}
+
+.stage-scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 240, 255, 0) 50%, rgba(0, 240, 255, 0.04) 50%),
+              linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+.stage-caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.caption-tag {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.caption-tag.cyan {
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.12);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.caption-tag.red {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.caption-sub {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: rgba(148, 163, 184, 0.7);
+}
+
+/* Stats Column */
+.dossier-stats-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stats-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+}
+
+.stats-label {
+  color: rgba(148, 163, 184, 0.8);
+  letter-spacing: 0.1em;
+}
+
+.stats-val {
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.08em;
+}
+
+.stats-val.cyan {
+  color: #00f0ff;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
+
+.stats-val.green {
+  color: #10b981;
+}
+
+.stats-val.pulse {
+  color: #38bdf8;
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* Stat Bars */
+.stat-bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bar-unit {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.bar-pct {
+  color: #00f0ff;
+}
+
+.bar-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #00f0ff);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.bar-fill.cyan {
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+}
+
+.bar-fill.purple {
+  background: linear-gradient(90deg, #8b5cf6, #c084fc);
+}
+
+/* Inventory */
+.inventory-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inventory-title {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: rgba(148, 163, 184, 0.9);
+  text-transform: uppercase;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .inventory-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.inv-badge {
+  background: rgba(0, 240, 255, 0.04);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  border-radius: 3px;
+  padding: 7px 10px;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  color: rgba(226, 232, 240, 0.85);
+  letter-spacing: 0.05em;
+}
+
+/* Action Buttons */
+.dossier-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+  .dossier-actions {
+    flex-direction: column;
+  }
+}
+
+.dossier-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.dossier-btn.primary {
+  background: #00f0ff;
+  color: #07060d;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+}
+
+.dossier-btn.primary:hover {
+  background: #fff;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.5);
+}
+
+.dossier-btn.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.dossier-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #00f0ff;
+  color: #00f0ff;
+}
+
+
+
