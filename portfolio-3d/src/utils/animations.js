@@ -71,18 +71,13 @@ export function triggerLevelUpAnimation() {
     )
   }
 
-  // 2. Animate the Solo Leveling Awakening Mana Burst Badge
+  // 2. Pulse the Solo Leveling Awakening Mana Avatar
   tl.fromTo(
-    '.level-up-burst-badge',
-    { opacity: 0, scale: 0.8, y: -10, display: 'none' },
-    { opacity: 1, scale: 1, y: 0, display: 'block', duration: 0.4, ease: 'back.out(2)' },
+    '.skills-awakening-avatar-img',
+    { scale: 1 },
+    { scale: 1.15, duration: 0.35, yoyo: true, repeat: 1, ease: 'back.out(2)' },
     '<'
-  ).to('.level-up-burst-badge', {
-    opacity: 0,
-    display: 'none',
-    delay: 2.8,
-    duration: 0.5,
-  })
+  )
 
   // 3. Animate all skill progress bars from 0 to full width
   tl.fromTo(

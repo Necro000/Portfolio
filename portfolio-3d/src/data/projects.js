@@ -159,7 +159,7 @@ export const projects = [
     ],
     role: 'Full-Stack Developer',
     tech: ['Next.js 16', 'React 19', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Tailwind CSS'],
-    thumbnail: '/projects/orbit-dashboard.png',
+    thumbnail: '/projects/orbit-auth.png',
     screenshots: [
       '/projects/orbit-auth.png',
       '/projects/orbit-dashboard.png',

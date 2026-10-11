@@ -7,7 +7,6 @@ import useReducedMotion from '../../hooks/useReducedMotion'
 
 function Navbar() {
   const [activeSection, setActiveSection] = useState(0)
-  const [isImpactActive, setIsImpactActive] = useState(false)
   const prefersReducedMotion = useReducedMotion()
 
   // Listen to window scroll to determine which scene is currently in view
@@ -33,13 +32,8 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Smoothly scroll to a selected section with element anchoring and anime impact frame
+  // Smoothly scroll to a selected section with element anchoring
   function scrollToSection(index) {
-    if (index !== activeSection && !prefersReducedMotion) {
-      setIsImpactActive(true)
-      setTimeout(() => setIsImpactActive(false), 220)
-    }
-
     const scene = SCENES[index]
     const targetEl = scene ? document.getElementById(scene.id) : null
 
@@ -60,8 +54,6 @@ function Navbar() {
   const needleAngle = activeSection * (360 / SCENES.length)
 
   return (
-    <>
-    {isImpactActive && <div className="manga-impact-overlay" />}
     <nav className="navbar" aria-label="Main Portfolio Navigation">
       {/* Brand logo + One Piece inspired compass */}
       <div className="navbar-brand">
@@ -98,7 +90,6 @@ function Navbar() {
         ))}
       </ul>
     </nav>
-    </>
   )
 }
 

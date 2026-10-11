@@ -6,8 +6,10 @@ uniform float uWaveSpeed;     // Speed of the rolling waves
 uniform float uWaveHeight;    // Height of the wave crests
 
 varying float vElevation;     // Sent to fragment shader so it knows the wave height
+varying vec2 vUv;            // UV coordinates for edge feathering
 
 void main() {
+  vUv = uv;
   vec3 modelPosition = position;
 
   // Calculate sine-wave displacement using both X and Y local coordinates
